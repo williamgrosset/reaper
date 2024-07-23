@@ -4,4 +4,15 @@
 ## Author: Fable
 ## Version: 0.1.0
 
+## Libs
+Libs/ChatThrottleLib.lua
+Libs/DeathNotificationLib/NPCS/id_to_npc_classic_en.lua
+Libs/DeathNotificationLib/NPCS/npc_to_id_classic_en.lua
+Libs/DeathNotificationLib/DeathNotificationLib.lua
+
+## Modules
+Modules/Loader/ModuleLoader.lua
+Modules/Widgets/Popup.lua
+Modules/Init.lua
+
 Reaper.lua
