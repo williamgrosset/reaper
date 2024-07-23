@@ -1,0 +1,7 @@
+## Interface: 11503
+## Title: Reaper
+## Notes: Hardcore death alerts
+## Author: Fable
+## Version: 0.1.0
+
+Reaper.lua
