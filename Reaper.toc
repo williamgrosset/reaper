@@ -13,6 +13,7 @@ Libs/DeathNotificationLib/DeathNotificationLib.lua
 ## Modules
 Modules/Loader/ModuleLoader.lua
 Modules/Widgets/Popup.lua
+Modules/Widgets/DebugWindow.lua
 Modules/Init.lua
 
 Reaper.lua
