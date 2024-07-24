@@ -2,9 +2,16 @@
 local DebugWindow = ModuleLoader:UseModule("DebugWindow")
 local _DebugWindow = DebugWindow.private
 
-local Popup = ModuleLoader:UseModule("Popup")
+local DeathToast = ModuleLoader:UseModule("DeathToast")
 
 function DebugWindow:Create()
+  Reaper:Print("DebugWindow Created")
+
+  local frame = _DebugWindow:CreateFrame()
+  _DebugWindow:AddButton(frame)
+end
+
+function _DebugWindow:CreateFrame()
   local frame = CreateFrame("Frame", "DebugFrame", UIParent, "BasicFrameTemplateWithInset")
   frame:SetSize(100, 100)
   frame:SetPoint("CENTER")
@@ -17,15 +24,20 @@ function DebugWindow:Create()
   frame.title:SetFontObject("GameFontHighlight")
   frame.title:SetPoint("CENTER", frame.TitleBg, "CENTER", 0, 0)
   frame.title:SetText("Debug")
+  return frame
+end
 
+---@param frame Frame
+function _DebugWindow:AddButton(frame)
   local testButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
   testButton:SetPoint("CENTER", frame, "CENTER", 0, -10)
-  testButton:SetSize(60, 40) -- Width, Height
+  testButton:SetSize(60, 40)
   testButton:SetText("Test")
   testButton:SetNormalFontObject("GameFontNormalLarge")
   testButton:SetHighlightFontObject("GameFontHighlightLarge")
-
   testButton:SetScript("OnClick", function()
-    Popup:Create()
+    -- Death mock:
+    -- Fable <Drow> level 20 rogue was slain by Defias Smuggler in Elwynn Forest
+    DeathToast:Create('Fable', '<Drow>', 4, 20, 95, 1429)
   end)
 end
