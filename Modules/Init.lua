@@ -1,8 +1,8 @@
 ---@class Init
-local Init = ModuleLoader:UseModule("Init")
+local Init = ModuleLoader:CreateModule("Init")
 local _Init = Init.private
 
-local DebugWindow = ModuleLoader:UseModule("DebugWindow")
+local DebugWindow = ModuleLoader:ImportModule("DebugWindow")
 
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")

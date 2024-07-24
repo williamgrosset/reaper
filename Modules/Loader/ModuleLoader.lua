@@ -5,7 +5,7 @@ ModuleLoader = {}
 local modules = {}
 
 ---@return Module @Module reference
-local function _CreateModule()
+local function _CreateBlankModule()
   ---@class Module
   local module = {}
   module.private = {}
@@ -14,10 +14,20 @@ end
 
 ---@param name string @Module name
 ---@return Module @Module reference
-function ModuleLoader:UseModule(name)
+function ModuleLoader:CreateModule(name)
   if not modules[name] then
-    modules[name] = _CreateModule()
+    modules[name] = _CreateBlankModule()
     return modules[name]
+  else
+    return modules[name]
+  end
+end
+
+---@param name string @Module name
+---@return Module @Module reference
+function ModuleLoader:ImportModule(name)
+  if not modules[name] then
+    error("Importing a module that has not been created")
   else
     return modules[name]
   end

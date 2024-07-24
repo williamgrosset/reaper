@@ -1,5 +1,5 @@
 ---@class DeathToast
-local DeathToast = ModuleLoader:UseModule("DeathToast")
+local DeathToast = ModuleLoader:CreateModule("DeathToast")
 local _DeathToast = DeathToast.private
 
 ---@param player_name string

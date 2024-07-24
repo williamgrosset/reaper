@@ -1,8 +1,8 @@
 ---@class DebugWindow
-local DebugWindow = ModuleLoader:UseModule("DebugWindow")
+local DebugWindow = ModuleLoader:CreateModule("DebugWindow")
 local _DebugWindow = DebugWindow.private
 
-local DeathToast = ModuleLoader:UseModule("DeathToast")
+local DeathToast = ModuleLoader:ImportModule("DeathToast")
 
 function DebugWindow:Create()
   Reaper:Print("DebugWindow Created")

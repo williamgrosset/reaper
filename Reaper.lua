@@ -1,7 +1,7 @@
 ---@class Reaper
 Reaper = {...}
 
-local Init = ModuleLoader:UseModule("Init")
+local Init = ModuleLoader:ImportModule("Init")
 
 local loadingFrame = CreateFrame("Frame")
 Reaper.loadingFrame = loadingFrame
