@@ -14,7 +14,8 @@ include_patterns = [
 ]
 
 exclude_patterns = [
-    ".git"
+    ".git",
+    "Scripts"
 ]
 
 def matches_include_patterns(file_path, patterns):
