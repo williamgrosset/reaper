@@ -15,10 +15,10 @@ end
 ---@param name string @Module name
 ---@return Module @Module reference
 function ModuleLoader:CreateModule(name)
-  if not modules[name] then
-    modules[name] = _CreateBlankModule()
-    return modules[name]
+  if modules[name] then
+    error("Creating a duplicate module")
   else
+    modules[name] = _CreateBlankModule()
     return modules[name]
   end
 end
