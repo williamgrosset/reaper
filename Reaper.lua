@@ -1,7 +1,8 @@
 ---@class Reaper
-Reaper = {...}
+Reaper = Reaper or {}
 
-local Init = ModuleLoader:ImportModule("Init")
+---@class Init
+local Init = Reaper.Init
 
 local loadingFrame = CreateFrame("Frame")
 Reaper.loadingFrame = loadingFrame
@@ -22,9 +23,4 @@ end)
 ---@param message string
 function Reaper:Print(message)
   print("|cFF1de9b6[Reaper]|r " .. message)
-end
-
----@param message string
-function Reaper:Error(message)
-  Reaper:Print("|cffff0000ERROR|r " .. message)
 end

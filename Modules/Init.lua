@@ -1,8 +1,20 @@
----@class Init
-local Init = ModuleLoader:CreateModule("Init")
-local _Init = Init.private
+Reaper = Reaper or {}
 
-local DebugWindow = ModuleLoader:ImportModule("DebugWindow")
+---@class Init
+local Init = {}
+Reaper.Init = Init
+Init.__index = Init
+
+---@class DebugWindow
+local DebugWindow = Reaper.DebugWindow
+
+---@param self Init
+local function registerEvents(self)
+  Reaper:Print("Events Registered")
+  DeathNotificationLib_HookOnNewEntry(function(_player_data, _checksum, num_peer_checks, in_guild)
+    Reaper:Print("Death Occurred")
+  end)
+end
 
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
@@ -10,13 +22,7 @@ end
 
 function Init:OnPlayerLogin()
   Reaper:Print("Player Logged In")
-  _Init:RegisterEvents()
-  DebugWindow:Create()
-end
-
-function _Init:RegisterEvents()
-  Reaper:Print("Events Registered")
-  DeathNotificationLib_HookOnNewEntry(function(_player_data, _checksum, num_peer_checks, in_guild)
-    Reaper:Print("Death Occurred")
-  end)
+  registerEvents(self)
+  local debugWindow = DebugWindow:new()
+  debugWindow:Create()
 end

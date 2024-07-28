@@ -1,36 +1,34 @@
+Reaper = Reaper or {}
+
 ---@class DebugWindow
-local DebugWindow = ModuleLoader:CreateModule("DebugWindow")
-local _DebugWindow = DebugWindow.private
+local DebugWindow = {}
+Reaper.DebugWindow = DebugWindow
+DebugWindow.__index = DebugWindow
 
-local DeathToast = ModuleLoader:ImportModule("DeathToast")
+---@class DeathToast
+local DeathToast = Reaper.DeathToast
 
-function DebugWindow:Create()
-  Reaper:Print("DebugWindow Created")
-
-  local frame = _DebugWindow:CreateFrame()
-  _DebugWindow:AddButton(frame)
+---@param self DebugWindow
+local function createFrame(self)
+  local window = CreateFrame("Frame", "DebugFrame", UIParent, "BasicFrameTemplateWithInset")
+  window:SetSize(100, 100)
+  window:SetPoint("CENTER")
+  window:SetMovable(true)
+  window:EnableMouse(true)
+  window:RegisterForDrag("LeftButton")
+  window:SetScript("OnDragStart", window.StartMoving)
+  window:SetScript("OnDragStop", window.StopMovingOrSizing)
+  window.title = window:CreateFontString(nil, "OVERLAY")
+  window.title:SetFontObject("GameFontHighlight")
+  window.title:SetPoint("CENTER", window.TitleBg, "CENTER", 0, 0)
+  window.title:SetText("Debug")
+  self.window = window
 end
 
-function _DebugWindow:CreateFrame()
-  local frame = CreateFrame("Frame", "DebugFrame", UIParent, "BasicFrameTemplateWithInset")
-  frame:SetSize(100, 100)
-  frame:SetPoint("CENTER")
-  frame:SetMovable(true)
-  frame:EnableMouse(true)
-  frame:RegisterForDrag("LeftButton")
-  frame:SetScript("OnDragStart", frame.StartMoving)
-  frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
-  frame.title = frame:CreateFontString(nil, "OVERLAY")
-  frame.title:SetFontObject("GameFontHighlight")
-  frame.title:SetPoint("CENTER", frame.TitleBg, "CENTER", 0, 0)
-  frame.title:SetText("Debug")
-  return frame
-end
-
----@param frame Frame
-function _DebugWindow:AddButton(frame)
-  local testButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
-  testButton:SetPoint("CENTER", frame, "CENTER", 0, -10)
+---@param self DebugWindow
+local function addButton(self)
+  local testButton = CreateFrame("Button", nil, self.window, "GameMenuButtonTemplate")
+  testButton:SetPoint("CENTER", self.window, "CENTER", 0, -10)
   testButton:SetSize(60, 40)
   testButton:SetText("Test")
   testButton:SetNormalFontObject("GameFontNormalLarge")
@@ -38,6 +36,20 @@ function _DebugWindow:AddButton(frame)
   testButton:SetScript("OnClick", function()
     -- Death mock:
     -- Fable <Drow> level 20 rogue was slain by Defias Smuggler in Elwynn Forest
-    DeathToast:Create('Fable', '<Drow>', 4, 20, 95, 1429)
+    local toast = DeathToast:new()
+    toast:Create('Fable', '<Drow>', 4, 20, 95, 1429)
   end)
+end
+
+function DebugWindow:new()
+  local self = setmetatable({}, DebugWindow)
+  self.window = nil
+  return self
+end
+
+function DebugWindow:Create()
+  Reaper:Print("DebugWindow Created")
+
+  createFrame(self)
+  addButton(self)
 end

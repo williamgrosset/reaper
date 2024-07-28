@@ -1,26 +1,12 @@
+Reaper = Reaper or {}
+
 ---@class DeathToast
-local DeathToast = ModuleLoader:CreateModule("DeathToast")
-local _DeathToast = DeathToast.private
+local DeathToast = {}
+Reaper.DeathToast = DeathToast
+DeathToast.__index = DeathToast
 
----@param player_name string
----@param guild_name string
----@param class_id number
----@param player_level number
----@param creature_id number
----@param zone_id number
-function DeathToast:Create(player_name, guild_name, class_id, player_level, creature_id, zone_id)
-  Reaper:Print("DeathToast Created")
-
-  -- Dummy example
-  local toast = _DeathToast:CreateToast()
-  local classIcon = _DeathToast:AddClassIcon(toast, "Druid")
-  _DeathToast:AddPlayerLabel(toast, classIcon, "Rolandmartin", "(51)")
-  _DeathToast:AddCreatureLabel(toast, classIcon, "Boar", "(61)")
-
-  toast:Show()
-end
-
-function _DeathToast:CreateToast()
+---@param self DeathToast
+local function createToast(self)
   local toast = CreateFrame("Frame", "CustomTooltip", UIParent, "BackdropTemplate")
   toast:Hide()
 
@@ -30,7 +16,6 @@ function _DeathToast:CreateToast()
       self:Hide()
     end
   end)
-
 
   toast:SetSize(272, 64)
   toast:SetPoint("TOP", 0, -100)
@@ -44,16 +29,15 @@ function _DeathToast:CreateToast()
   toast:SetBackdropColor(0, 0, 0, 1)
   toast:SetBackdropBorderColor(0.639, 0.208, 0.933, 1) -- Purple (Epic)
 
-  return toast
+  self.toast = toast
 end
 
----@param toast Frame
----@param classIcon Frame
+---@param self DeathToast
 ---@param text string
----@param level string
-function _DeathToast:AddPlayerLabel(toast, classIcon, text, level)
-  local container = CreateFrame("Frame", nil, toast)
-  
+---@param text string
+local function addPlayerLabel(self, text, level)
+  local container = CreateFrame("Frame", nil, self.toast)
+    
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   mainText:SetText(text)
 
@@ -65,23 +49,22 @@ function _DeathToast:AddPlayerLabel(toast, classIcon, text, level)
 
   local iconPaddingLeft = 8
   local iconPaddingRight = 8
-  local iconWidth = classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
+  local iconWidth = self.classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
 
   container:SetSize(totalWidth, mainText:GetStringHeight())
-  
-  local toastWidth = toast:GetWidth()
-  container:SetPoint("LEFT", classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, 10)
-  
+    
+  local toastWidth = self.toast:GetWidth()
+  container:SetPoint("LEFT", self.classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, 10)
+    
   mainText:SetPoint("LEFT", container, "LEFT")
   levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
 end
 
----@param toast Frame
----@param classIcon Frame
+---@param self DeathToast
 ---@param text string
----@param level string
-function _DeathToast:AddCreatureLabel(toast, classIcon, text, level)
-  local container = CreateFrame("Frame", nil, toast)
+---@param text string
+local function addCreatureLabel(self, text, level)
+  local container = CreateFrame("Frame", nil, self.toast)
 
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
   mainText:SetText(text)
@@ -98,25 +81,24 @@ function _DeathToast:AddCreatureLabel(toast, classIcon, text, level)
 
   local iconPaddingLeft = 8
   local iconPaddingRight = 8
-  local iconWidth = classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
+  local iconWidth = self.classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
 
   container:SetSize(totalWidth, mainText:GetStringHeight())
 
-  local toastWidth = toast:GetWidth()
-  container:SetPoint("LEFT", classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, -10)
+  local toastWidth = self.toast:GetWidth()
+  container:SetPoint("LEFT", self.classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, -10)
 
   skullTexture:SetPoint("LEFT", container, "LEFT")
   mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
   levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
 end
 
----@param toast Frame
+---@param self DeathToast
 ---@param class string
----@return Frame
-function _DeathToast:AddClassIcon(toast, class)
-  local classIconFrame = CreateFrame("Frame", nil, toast, "BackdropTemplate")
+local function addClassIcon(self, class)
+  local classIconFrame = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
   classIconFrame:SetSize(47.5, 47)
-  classIconFrame:SetPoint("LEFT", toast, "LEFT", 8, 0)
+  classIconFrame:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
   classIconFrame:SetBackdrop({
     bgFile = nil,
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -130,5 +112,31 @@ function _DeathToast:AddClassIcon(toast, class)
   classIcon:SetSize(42, 42)
   classIcon:SetPoint("CENTER", classIconFrame, "CENTER", 0, 0)
 
-  return classIconFrame
+  self.classIcon = classIconFrame
+end
+
+---@return DeathToast
+function DeathToast:new()
+  local self = setmetatable({}, DeathToast)
+  self.toast = nil
+  self.classIcon = nil
+  return self
+end
+
+---@param playerName string
+---@param guildName string
+---@param classId number
+---@param playerLevel number
+---@param creatureId number
+---@param zoneId number
+function DeathToast:Create(playerName, guildName, classId, playerName, creatureId, zoneId)
+  print("DeathToast Created")
+
+  -- Dummy example
+  createToast(self)
+  addClassIcon(self, "Druid")
+  addPlayerLabel(self, "Rolandmartin", "(51)")
+  addCreatureLabel(self, "Boar", "(61)")
+
+  self.toast:Show()
 end
