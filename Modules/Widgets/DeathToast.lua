@@ -16,10 +16,13 @@ function DeathToast:Create(player_name, guild_name, class_id, player_level, crea
   local classIcon = _DeathToast:AddClassIcon(toast, "Druid")
   _DeathToast:AddPlayerLabel(toast, classIcon, "Rolandmartin", "(51)")
   _DeathToast:AddCreatureLabel(toast, classIcon, "Boar", "(61)")
+
+  toast:Show()
 end
 
 function _DeathToast:CreateToast()
   local toast = CreateFrame("Frame", "CustomTooltip", UIParent, "BackdropTemplate")
+  toast:Hide()
 
   toast:EnableMouse(true)
   toast:SetScript("OnMouseDown", function(self, button)
