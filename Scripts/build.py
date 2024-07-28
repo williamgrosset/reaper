@@ -9,6 +9,7 @@ include_patterns = [
     "*.lua",
     "*.xml",
     "*.toc",
+    "*.tga",
     "README.md",
     "LICENSE"
 ]
