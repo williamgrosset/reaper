@@ -13,9 +13,9 @@ function DeathToast:Create(player_name, guild_name, class_id, player_level, crea
 
   -- Dummy example
   local toast = _DeathToast:CreateToast()
-  local classIcon = _DeathToast:AddClassIcon(toast, "Warrior")
-  _DeathToast:AddPlayerLabel(toast, classIcon, "Khadalyonsus", "(51)")
-  _DeathToast:AddCreatureLabel(toast, classIcon, "Defias Smuggler", "(52)")
+  local classIcon = _DeathToast:AddClassIcon(toast, "Druid")
+  _DeathToast:AddPlayerLabel(toast, classIcon, "Rolandmartin", "(51)")
+  _DeathToast:AddCreatureLabel(toast, classIcon, "Boar", "(61)")
 end
 
 function _DeathToast:CreateToast()
@@ -29,7 +29,7 @@ function _DeathToast:CreateToast()
   end)
 
 
-  toast:SetSize(264, 64)
+  toast:SetSize(272, 64)
   toast:SetPoint("TOP", 0, -100)
 
   toast:SetBackdrop({
