@@ -35,6 +35,35 @@ local function createToast(self)
   local color = self.rarity:getColor()
   toast:SetBackdropBorderColor(color.red, color.green, color.blue)
 
+  local fadeIn = toast:CreateAnimationGroup()
+  local fadeOut = toast:CreateAnimationGroup()
+
+  local fadeInAlpha = fadeIn:CreateAnimation("Alpha")
+  fadeInAlpha:SetFromAlpha(0)
+  fadeInAlpha:SetToAlpha(1)
+  fadeInAlpha:SetDuration(0.2)
+  fadeInAlpha:SetSmoothing("IN")
+
+  local fadeOutAlpha = fadeOut:CreateAnimation("Alpha")
+  fadeOutAlpha:SetFromAlpha(1)
+  fadeOutAlpha:SetToAlpha(0)
+  fadeOutAlpha:SetDuration(0.5)
+  fadeOutAlpha:SetStartDelay(8)
+  fadeOutAlpha:SetSmoothing("OUT")
+
+  fadeOut:SetScript("OnFinished", function()
+    toast:Hide()
+  end)
+
+  toast.fadeIn = fadeIn
+  toast.fadeOut = fadeOut
+
+  toast.ShowToast = function()
+    toast:Show()
+    toast.fadeIn:Play()
+    toast.fadeOut:Play()
+  end
+
   return toast
 end
 
@@ -139,8 +168,6 @@ local function addLegendaryDragon(self)
 
   local color = self.rarity:getColor()
   dragonTexture:SetVertexColor(color.red, color.green, color.blue)
-
-  return dragon
 end
 
 ---@return DeathToast
@@ -149,7 +176,7 @@ function DeathToast:new()
 
   local class = "Paladin"
   local playerName = "Alexandar"
-  local playerLevel = 60
+  local playerLevel = 24
   local creatureName = "Ragnaros"
   local creatureLevel = 61
 
@@ -165,7 +192,7 @@ function DeathToast:new()
     addLegendaryDragon(self)
   end
 
-  self.toast:Show()
+  self.toast:ShowToast()
 
   return self
 end
