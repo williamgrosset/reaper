@@ -38,7 +38,7 @@ local function addButton(self)
   local manager = ToastManager:new(3)
 
   testButton:SetScript("OnClick", function()
-    manager:addToast("Warrior", "Khadalyonsus", 23, "Stitches", 35)
+    manager:addToast("Rogue", "Fable", 52, "Ravasaur Hunter", 50)
   end)
 end
 

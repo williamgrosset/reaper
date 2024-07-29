@@ -134,7 +134,7 @@ end
 ---@return classIcon Frame
 local function addClassIcon(self, class)
   local classIcon = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
-  classIcon:SetSize(47.5, 47)
+  classIcon:SetSize(48, 48)
   classIcon:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
   classIcon:SetBackdrop({
     bgFile = nil,
@@ -176,7 +176,7 @@ end
 ---@param creatureLevel number
 ---@return DeathToast
 function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
-  print("DeathToast Created")
+  Reaper:Print("DeathToast Created")
 
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
