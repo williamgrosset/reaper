@@ -126,17 +126,44 @@ local function addClassIcon(self, class)
   return classIcon
 end
 
+---@param self DeathToast
+local function addLegendaryDragon(self)
+  local dragon = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
+  dragon:SetSize(96, 96)
+  dragon:SetPoint("TOPLEFT", self.toast, "TOPLEFT", -24, 12)
+
+  local dragonTexture = dragon:CreateTexture(nil, "ARTWORK")
+  dragonTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Dragon")
+  dragonTexture:SetAllPoints(dragon)
+  dragonTexture:SetDesaturated(true)
+
+  local color = self.rarity:getColor()
+  dragonTexture:SetVertexColor(color.red, color.green, color.blue)
+
+  return dragon
+end
+
 ---@return DeathToast
 function DeathToast:new()
   print("DeathToast Created")
 
-  local self = setmetatable({}, DeathToast)
-  self.rarity = Rarity:new(36)
-  self.toast = createToast(self)
-  self.classIcon = addClassIcon(self, "Paladin")
+  local class = "Paladin"
+  local playerName = "Alexandar"
+  local playerLevel = 60
+  local creatureName = "Ragnaros"
+  local creatureLevel = 61
 
-  addPlayerLabel(self, "Alexandar", 36)
-  addCreatureLabel(self, "Ragnaros", 61)
+  local self = setmetatable({}, DeathToast)
+  self.rarity = Rarity:new(playerLevel)
+  self.toast = createToast(self)
+  self.classIcon = addClassIcon(self, class)
+
+  addPlayerLabel(self, playerName, playerLevel)
+  addCreatureLabel(self, creatureName, creatureLevel)
+
+  if playerLevel == 60 then
+    addLegendaryDragon(self)
+  end
 
   self.toast:Show()
 
