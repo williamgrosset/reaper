@@ -24,5 +24,4 @@ function Init:OnPlayerLogin()
   Reaper:Print("Player Logged In")
   registerEvents(self)
   local debugWindow = DebugWindow:new()
-  debugWindow:Create()
 end

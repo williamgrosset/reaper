@@ -9,7 +9,8 @@ DebugWindow.__index = DebugWindow
 local DeathToast = Reaper.DeathToast
 
 ---@param self DebugWindow
-local function createFrame(self)
+---@return window Frame
+local function createWindow(self)
   local window = CreateFrame("Frame", "DebugFrame", UIParent, "BasicFrameTemplateWithInset")
   window:SetSize(100, 100)
   window:SetPoint("CENTER")
@@ -22,7 +23,7 @@ local function createFrame(self)
   window.title:SetFontObject("GameFontHighlight")
   window.title:SetPoint("CENTER", window.TitleBg, "CENTER", 0, 0)
   window.title:SetText("Debug")
-  self.window = window
+  return window
 end
 
 ---@param self DebugWindow
@@ -40,14 +41,12 @@ local function addButton(self)
 end
 
 function DebugWindow:new()
-  local self = setmetatable({}, DebugWindow)
-  self.window = nil
-  return self
-end
-
-function DebugWindow:Create()
   Reaper:Print("DebugWindow Created")
 
-  createFrame(self)
+  local self = setmetatable({}, DebugWindow)
+  self.window = createWindow(self)
+
   addButton(self)
+
+  return self
 end

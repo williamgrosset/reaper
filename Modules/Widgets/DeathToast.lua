@@ -9,6 +9,7 @@ DeathToast.__index = DeathToast
 local Rarity = Reaper.Rarity
 
 ---@param self DeathToast
+---@return toast Frame
 local function createToast(self)
   local toast = CreateFrame("Frame", "CustomTooltip", UIParent, "BackdropTemplate")
   toast:Hide()
@@ -34,7 +35,7 @@ local function createToast(self)
   local color = self.rarity:getColor()
   toast:SetBackdropBorderColor(color.red, color.green, color.blue)
 
-  self.toast = toast
+  return toast
 end
 
 ---@param self DeathToast
@@ -102,11 +103,12 @@ end
 
 ---@param self DeathToast
 ---@param class string
+---@return classIcon Frame
 local function addClassIcon(self, class)
-  local classIconFrame = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
-  classIconFrame:SetSize(47.5, 47)
-  classIconFrame:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
-  classIconFrame:SetBackdrop({
+  local classIcon = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
+  classIcon:SetSize(47.5, 47)
+  classIcon:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
+  classIcon:SetBackdrop({
     bgFile = nil,
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true, tileSize = 16, edgeSize = 12,
@@ -114,14 +116,14 @@ local function addClassIcon(self, class)
   })
 
   local color = self.rarity:getColor()
-  classIconFrame:SetBackdropBorderColor(color.red, color.green, color.blue)
+  classIcon:SetBackdropBorderColor(color.red, color.green, color.blue)
 
-  local classIcon = classIconFrame:CreateTexture(nil, "ARTWORK")
-  classIcon:SetTexture("Interface\\Addons\\Reaper\\Icons\\" .. class)
-  classIcon:SetSize(42, 42)
-  classIcon:SetPoint("CENTER", classIconFrame, "CENTER", 0, 0)
+  local icon = classIcon:CreateTexture(nil, "ARTWORK")
+  icon:SetTexture("Interface\\Addons\\Reaper\\Icons\\" .. class)
+  icon:SetSize(42, 42)
+  icon:SetPoint("CENTER", classIcon, "CENTER", 0, 0)
 
-  self.classIcon = classIconFrame
+  return classIcon
 end
 
 ---@return DeathToast
@@ -129,13 +131,10 @@ function DeathToast:new()
   print("DeathToast Created")
 
   local self = setmetatable({}, DeathToast)
-  self.toast = nil
-  self.classIcon = nil
   self.rarity = Rarity:new(36)
+  self.toast = createToast(self)
+  self.classIcon = addClassIcon(self, "Paladin")
 
-  -- Dummy example
-  createToast(self)
-  addClassIcon(self, "Paladin")
   addPlayerLabel(self, "Alexandar", 36)
   addCreatureLabel(self, "Ragnaros", 61)
 
