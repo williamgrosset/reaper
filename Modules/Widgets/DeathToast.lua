@@ -22,7 +22,6 @@ local function createToast(self)
   end)
 
   toast:SetSize(272, 64)
-  toast:SetPoint("TOP", 0, -100)
 
   toast:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
@@ -170,15 +169,14 @@ local function addLegendaryDragon(self)
   dragonTexture:SetVertexColor(color.red, color.green, color.blue)
 end
 
+---@param class string
+---@param playerName string
+---@param playerLevel number
+---@param creatureName string
+---@param creatureLevel number
 ---@return DeathToast
-function DeathToast:new()
+function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
   print("DeathToast Created")
-
-  local class = "Paladin"
-  local playerName = "Alexandar"
-  local playerLevel = 24
-  local creatureName = "Ragnaros"
-  local creatureLevel = 61
 
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
@@ -191,8 +189,6 @@ function DeathToast:new()
   if playerLevel == 60 then
     addLegendaryDragon(self)
   end
-
-  self.toast:ShowToast()
 
   return self
 end

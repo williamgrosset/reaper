@@ -5,8 +5,8 @@ local DebugWindow = {}
 Reaper.DebugWindow = DebugWindow
 DebugWindow.__index = DebugWindow
 
----@class DeathToast
-local DeathToast = Reaper.DeathToast
+---@class ToastManager
+local ToastManager = Reaper.ToastManager
 
 ---@param self DebugWindow
 ---@return window Frame
@@ -34,12 +34,15 @@ local function addButton(self)
   testButton:SetText("Test")
   testButton:SetNormalFontObject("GameFontNormalLarge")
   testButton:SetHighlightFontObject("GameFontHighlightLarge")
+
+  local manager = ToastManager:new(3)
+
   testButton:SetScript("OnClick", function()
-    -- Death mock
-    local toast = DeathToast:new()
+    manager:addToast("Warrior", "Khadalyonsus", 23, "Stitches", 35)
   end)
 end
 
+---@return DebugWindow
 function DebugWindow:new()
   Reaper:Print("DebugWindow Created")
 
