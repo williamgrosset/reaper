@@ -39,7 +39,7 @@ end
 
 ---@param self DeathToast
 ---@param text string
----@param text string
+---@param level number
 local function addPlayerLabel(self, text, level)
   local container = CreateFrame("Frame", nil, self.toast)
     
@@ -47,7 +47,7 @@ local function addPlayerLabel(self, text, level)
   mainText:SetText(text)
 
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-  levelText:SetText(level)
+  levelText:SetText("(" .. level .. ")")
 
   local color = self.rarity:getColor()
   levelText:SetTextColor(color.red, color.green, color.blue)
@@ -69,7 +69,7 @@ end
 
 ---@param self DeathToast
 ---@param text string
----@param text string
+---@param level number
 local function addCreatureLabel(self, text, level)
   local container = CreateFrame("Frame", nil, self.toast)
 
@@ -81,7 +81,7 @@ local function addCreatureLabel(self, text, level)
   skullTexture:SetSize(16, 16)
 
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-  levelText:SetText(level)
+  levelText:SetText("(" .. level .. ")")
   levelText:SetTextColor(1, 0, 0)
 
   local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + levelText:GetStringWidth() + 4
@@ -136,8 +136,8 @@ function DeathToast:new()
   -- Dummy example
   createToast(self)
   addClassIcon(self, "Paladin")
-  addPlayerLabel(self, "Alexandar", "(36)")
-  addCreatureLabel(self, "Ragnaros", "(??)")
+  addPlayerLabel(self, "Alexandar", 36)
+  addCreatureLabel(self, "Ragnaros", 61)
 
   self.toast:Show()
 
