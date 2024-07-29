@@ -5,6 +5,9 @@ local DeathToast = {}
 Reaper.DeathToast = DeathToast
 DeathToast.__index = DeathToast
 
+---@class Rarity
+local Rarity = Reaper.Rarity
+
 ---@param self DeathToast
 local function createToast(self)
   local toast = CreateFrame("Frame", "CustomTooltip", UIParent, "BackdropTemplate")
@@ -27,7 +30,9 @@ local function createToast(self)
     insets = { left = 4, right = 4, top = 4, bottom = 4 }
   })
   toast:SetBackdropColor(0, 0, 0, 1)
-  toast:SetBackdropBorderColor(0.639, 0.208, 0.933, 1) -- Purple (Epic)
+
+  local color = self.rarity:getColor()
+  toast:SetBackdropBorderColor(color.red, color.green, color.blue)
 
   self.toast = toast
 end
@@ -43,7 +48,9 @@ local function addPlayerLabel(self, text, level)
 
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   levelText:SetText(level)
-  levelText:SetTextColor(0.639, 0.208, 0.933) -- Purple (Epic)
+
+  local color = self.rarity:getColor()
+  levelText:SetTextColor(color.red, color.green, color.blue)
 
   local totalWidth = mainText:GetStringWidth() + levelText:GetStringWidth()
 
@@ -105,7 +112,9 @@ local function addClassIcon(self, class)
     tile = true, tileSize = 16, edgeSize = 12,
     insets = { left = 2, right = 2, top = 2, bottom = 2 }
   })
-  classIconFrame:SetBackdropBorderColor(0.639, 0.208, 0.933, 1) -- Purple (Epic)
+
+  local color = self.rarity:getColor()
+  classIconFrame:SetBackdropBorderColor(color.red, color.green, color.blue)
 
   local classIcon = classIconFrame:CreateTexture(nil, "ARTWORK")
   classIcon:SetTexture("Interface\\Addons\\Reaper\\Icons\\" .. class)
@@ -117,26 +126,20 @@ end
 
 ---@return DeathToast
 function DeathToast:new()
+  print("DeathToast Created")
+
   local self = setmetatable({}, DeathToast)
   self.toast = nil
   self.classIcon = nil
-  return self
-end
-
----@param playerName string
----@param guildName string
----@param classId number
----@param playerLevel number
----@param creatureId number
----@param zoneId number
-function DeathToast:Create(playerName, guildName, classId, playerName, creatureId, zoneId)
-  print("DeathToast Created")
+  self.rarity = Rarity:new(36)
 
   -- Dummy example
   createToast(self)
-  addClassIcon(self, "Druid")
-  addPlayerLabel(self, "Rolandmartin", "(51)")
-  addCreatureLabel(self, "Boar", "(61)")
+  addClassIcon(self, "Paladin")
+  addPlayerLabel(self, "Alexandar", "(36)")
+  addCreatureLabel(self, "Ragnaros", "(??)")
 
   self.toast:Show()
+
+  return self
 end

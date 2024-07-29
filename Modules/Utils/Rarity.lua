@@ -6,10 +6,9 @@ Reaper.Rarity = Rarity
 Rarity.__index = Rarity
 
 ---@param self Rarity
+---@param level number
 ---@return string
-local function setTier(self)
-  local level = self.playerLevel
-
+local function setTier(self, level)
   if level == 60 then
     return "legendary"
   elseif level <= 59 and level >= 48 then
@@ -49,15 +48,9 @@ function Rarity:new(level)
   end
 
   local self = setmetatable({}, Rarity)
-  self.playerLevel = level
-  self.tier = setTier(self)
+  self.tier = setTier(self, level)
   self.color = setColor(self)
   return self
-end
-
----@return number
-function Rarity:getPlayerLevel()
-  return self.playerLevel
 end
 
 ---@return string

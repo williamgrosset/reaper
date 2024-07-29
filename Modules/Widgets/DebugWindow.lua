@@ -34,10 +34,8 @@ local function addButton(self)
   testButton:SetNormalFontObject("GameFontNormalLarge")
   testButton:SetHighlightFontObject("GameFontHighlightLarge")
   testButton:SetScript("OnClick", function()
-    -- Death mock:
-    -- Fable <Drow> level 20 rogue was slain by Defias Smuggler in Elwynn Forest
+    -- Death mock
     local toast = DeathToast:new()
-    toast:Create('Fable', '<Drow>', 4, 20, 95, 1429)
   end)
 end
 
