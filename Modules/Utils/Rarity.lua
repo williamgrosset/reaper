@@ -29,15 +29,15 @@ local function setColor(self)
   local tier = self.tier
 
   if tier == "legendary" then
-    return { red: 1, green: 0.502, blue: 0 }
+    return { red = 1, green = 0.502, blue = 0 }
   elseif tier == "epic" then
-    return { red: 0.639, green: 0.208, blue: 0.933 }
+    return { red = 0.639, green = 0.208, blue = 0.933 }
   elseif tier == "rare" then
-    return { red: 0, green: 0.439, blue: 0.867 }
+    return { red = 0, green = 0.439, blue = 0.867 }
   elseif tier == "uncommon" then
-    return { red: 0.118 , green: 1, blue: 0 }
+    return { red = 0.118 , green = 1, blue = 0 }
   else
-    return { red: 1, green: 1, blue: 1 }
+    return { red = 1, green = 1, blue = 1 }
   end
 end
 
