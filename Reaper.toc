@@ -9,10 +9,10 @@ Libs/Ace/LibStub/LibStub.lua
 Libs/Ace/CallbackHandler-1.0/CallbackHandler-1.0.xml
 Libs/Ace/AceGUI-3.0/AceGUI-3.0.xml
 Libs/Ace/AceConfig-3.0/AceConfig-3.0.xml
-Libs/ChatThrottleLib.lua
-Libs/DeathNotificationLib/NPCS/id_to_npc_classic_en.lua
-Libs/DeathNotificationLib/NPCS/npc_to_id_classic_en.lua
-Libs/DeathNotificationLib/DeathNotificationLib.lua
+Libs/DNL/ChatThrottleLib.lua
+Libs/DNL/DeathNotificationLib/NPCS/id_to_npc_classic_en.lua
+Libs/DNL/DeathNotificationLib/NPCS/npc_to_id_classic_en.lua
+Libs/DNL/DeathNotificationLib/DeathNotificationLib.lua
 
 ## Modules
 Modules/Utils/Rarity.lua
