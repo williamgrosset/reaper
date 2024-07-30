@@ -5,9 +5,6 @@ local Init = {}
 Reaper.Init = Init
 Init.__index = Init
 
----@class DebugWindow
-local DebugWindow = Reaper.DebugWindow
-
 ---@param self Init
 local function registerEvents(self)
   Reaper:Print("Events Registered")
@@ -23,5 +20,4 @@ end
 function Init:OnPlayerLogin()
   Reaper:Print("Player Logged In")
   registerEvents(self)
-  local debugWindow = DebugWindow:new()
 end

@@ -18,7 +18,7 @@ Libs/DeathNotificationLib/DeathNotificationLib.lua
 Modules/Utils/Rarity.lua
 Modules/Widgets/DeathToast.lua
 Modules/Widgets/ToastManager.lua
-Modules/Widgets/DebugWindow.lua
+Modules/Widgets/ConfigWindow.lua
 Modules/Init.lua
 
 ## Index
