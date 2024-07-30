@@ -15,6 +15,7 @@ end
 
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
+  Reaper.Config:Initialize()
 end
 
 function Init:OnPlayerLogin()
