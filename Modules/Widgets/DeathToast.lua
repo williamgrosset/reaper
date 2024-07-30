@@ -132,7 +132,7 @@ end
 ---@param self DeathToast
 ---@param class string
 ---@return classIcon Frame
-local function addClassIcon(self, class)
+local function createClassIcon(self, class)
   local classIcon = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
   classIcon:SetSize(48, 48)
   classIcon:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
@@ -181,7 +181,7 @@ function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLe
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
   self.toast = createToast(self)
-  self.classIcon = addClassIcon(self, class)
+  self.classIcon = createClassIcon(self, class)
 
   addPlayerLabel(self, playerName, playerLevel)
   addCreatureLabel(self, creatureName, creatureLevel)
