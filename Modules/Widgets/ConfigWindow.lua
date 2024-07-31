@@ -117,6 +117,8 @@ function ConfigWindow:InitializeConfig()
         step = 1,
         order = 4,
         width = "double",
+        get = function(info) return Config:Get("alertDuration") end,
+        set = function(info, value) Config:Set("alertDuration", value) end,
       },
       totalAlerts = {
         type = 'range',

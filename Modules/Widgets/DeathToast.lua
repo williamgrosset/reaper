@@ -5,6 +5,9 @@ local DeathToast = {}
 Reaper.DeathToast = DeathToast
 DeathToast.__index = DeathToast
 
+---@class Config
+local Config = Reaper.Config
+
 ---@class Rarity
 local Rarity = Reaper.Rarity
 
@@ -44,10 +47,11 @@ local function createToast(self)
   fadeInAlpha:SetSmoothing("IN")
 
   local fadeOutAlpha = fadeOut:CreateAnimation("Alpha")
+  local alertDuration = Config:Get("alertDuration")
   fadeOutAlpha:SetFromAlpha(1)
   fadeOutAlpha:SetToAlpha(0)
   fadeOutAlpha:SetDuration(0.5)
-  fadeOutAlpha:SetStartDelay(8)
+  fadeOutAlpha:SetStartDelay(alertDuration)
   fadeOutAlpha:SetSmoothing("OUT")
 
   fadeOut:SetScript("OnFinished", function()

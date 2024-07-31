@@ -8,6 +8,7 @@ Config.__index = Config
 local defaultConfig = {
   disabledAlerts = false,
   minLevel = 1,
+  alertDuration = 6
 }
 
 function Config:Initialize()
