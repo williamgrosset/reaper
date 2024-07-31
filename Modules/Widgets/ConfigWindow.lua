@@ -15,6 +15,43 @@ local Config = Reaper.Config
 ---@class ToastManager
 local ToastManager = Reaper.ToastManager
 
+-- Singleton
+local instance
+
+local function initializeCommand()
+  SLASH_REAPER1 = "/reaper"
+  SlashCmdList["REAPER"] = function()
+    local instance = ConfigWindow:new()
+    instance:Open()
+  end
+end
+
+---@return ConfigWindow
+function ConfigWindow:new()
+  if instance then
+    return instance
+  end
+
+  Reaper:Print("ConfigWindow Created")
+
+  local self = setmetatable({}, ConfigWindow)
+  self:InitializeConfig()
+  instance = self
+  return instance
+end
+
+---@return ConfigWindow
+function ConfigWindow:GetInstance()
+  return instance
+end
+
+---@return ConfigWindow
+function ConfigWindow:Initialize()
+  instance = ConfigWindow:new()
+  initializeCommand()
+  return instance
+end
+
 function ConfigWindow:Open()
   AceConfigDialog:Open("Reaper")
 end
@@ -142,32 +179,3 @@ function ConfigWindow:InitializeConfig()
   AceConfig:RegisterOptionsTable("Reaper", options)
   AceConfigDialog:SetDefaultSize("Reaper", 440, 500) 
 end
-
----@return ConfigWindow
-function ConfigWindow:new()
-  Reaper:Print("ConfigWindow Created")
-
-  local self = setmetatable({}, ConfigWindow)
-  self:InitializeConfig()
-
-  return self
-end
-
-local function getConfigWindowInstance()
-  if not configWindowInstance then
-    configWindowInstance = ConfigWindow:new()
-  end
-  return configWindowInstance
-end
-
-
-function ConfigWindow:RegisterSlashCommand()
-  SLASH_REAPER1 = "/reaper"
-  SlashCmdList["REAPER"] = function()
-    local instance = getConfigWindowInstance()
-    instance:Open()
-  end
-end
-
--- Singleton instance
-local configWindowInstance

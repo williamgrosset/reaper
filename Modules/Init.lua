@@ -25,7 +25,7 @@ end
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
   Config:Initialize()
-  ConfigWindow:RegisterSlashCommand()
+  ConfigWindow:Initialize()
   ToastManager:Initialize(3)
 end
 
