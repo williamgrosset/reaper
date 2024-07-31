@@ -40,12 +40,19 @@ function ConfigWindow:InitializeConfig()
       },
       disabledAlerts = {
         type = 'toggle',
-        name = 'Disable alerts',
-        desc = 'Disable all death alerts',
+        name = 'Disable Reaper alerts',
+        desc = 'Disable Reaper death alerts',
         width = "full",
         order = 2,
         get = function(info) return Config:Get("disabledAlerts") end,
         set = function(info, value) Config:Set("disabledAlerts", value) end,
+      },
+      disabledOtherAlerts = {
+        type = 'toggle',
+        name = 'Disable Blizzard & Deathlog alerts',
+        desc = 'Disable Blizzard & Deathlog death alerts',
+        width = "full",
+        order = 3,
       },
       minLevel = {
         type = 'range',
@@ -54,22 +61,50 @@ function ConfigWindow:InitializeConfig()
         min = 1,
         max = 60,
         step = 1,
-        order = 3,
+        order = 4,
         width = "double",
         get = function(info) return Config:Get("minLevel") end,
         set = function(info, value) Config:Set("minLevel", value) end,
       },
+      alertDuration = {
+        type = 'range',
+        name = 'Alert duration',
+        desc = 'Duration of alert shown',
+        min = 1,
+        max = 10,
+        step = 1,
+        order = 5,
+        width = "double",
+      },
+      togglePosition = {
+        type = 'execute',
+        name = 'Toggle Position',
+        desc = 'Toggle death alert position',
+        order = 6,
+        func = function()
+          self:ShowTestToast()
+        end,
+      },
+      resetPosition = {
+        type = 'execute',
+        name = 'Reset Position',
+        desc = 'Reset death alert position',
+        order = 7,
+        func = function()
+          self:ShowTestToast()
+        end,
+      },
       spacer1 = {
         type = 'description',
         name = '',
-        order = 4,
+        order = 8,
         width = "full",
       },
-      testButton = {
+      testAlert = {
         type = 'execute',
         name = 'Test Alert',
         desc = 'Test a death alert',
-        order = 5,
+        order = 9,
         func = function()
           self:ShowTestToast()
         end,
@@ -77,14 +112,14 @@ function ConfigWindow:InitializeConfig()
       spacer2 = {
         type = 'description',
         name = '',
-        order = 6,
+        order = 10,
         width = "full",
       },
-      resetButton = {
+      reset = {
         type = 'execute',
         name = 'Reset to Defaults',
         desc = 'Reset configuration to default values',
-        order = 7,
+        order = 11,
         func = function()
           Reaper.Config:Reset()
           AceConfigDialog:SelectGroup("Reaper")
@@ -94,7 +129,7 @@ function ConfigWindow:InitializeConfig()
   }
 
   AceConfig:RegisterOptionsTable("Reaper", options)
-  AceConfigDialog:SetDefaultSize("Reaper", 440, 590)
+  AceConfigDialog:SetDefaultSize("Reaper", 440, 500) 
 end
 
 ---@return ConfigWindow
