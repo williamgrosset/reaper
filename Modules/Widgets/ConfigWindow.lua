@@ -121,7 +121,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Reset configuration to default values',
         order = 11,
         func = function()
-          Reaper.Config:Reset()
+          Config:Reset()
           AceConfigDialog:SelectGroup("Reaper")
         end,
       },
@@ -161,5 +161,3 @@ end
 
 -- Singleton instance
 local configWindowInstance
-
-ConfigWindow:RegisterSlashCommand()

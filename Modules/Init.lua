@@ -8,6 +8,9 @@ Init.__index = Init
 ---@class Config
 local Config = Reaper.Config
 
+---@class ConfigWindow
+local ConfigWindow = Reaper.ConfigWindow
+
 ---@param self Init
 local function registerEvents(self)
   Reaper:Print("Events Registered")
@@ -19,6 +22,7 @@ end
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
   Config:Initialize()
+  ConfigWindow:RegisterSlashCommand()
 end
 
 function Init:OnPlayerLogin()
