@@ -61,3 +61,10 @@ function ToastManager:addToast(class, playerName, playerLevel, creatureName, cre
 
   toast.toast:ShowToast()
 end
+
+function ToastManager:flush()
+  for _, toast in ipairs(self.toasts) do
+    toast.toast:Hide()
+  end
+  self.toasts = {}
+end

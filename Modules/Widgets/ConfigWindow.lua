@@ -66,6 +66,16 @@ function ConfigWindow:ShowTestToast()
   end
 end
 
+function ConfigWindow:FlushQueue()
+  local manager = ToastManager:GetInstance()
+
+  if manager then
+    manager:flush()
+  else
+    Reaper:Print("ToastManager not initialized.")
+  end
+end
+
 function ConfigWindow:InitializeConfig()
   local options = {
     name = "Reaper",
@@ -79,19 +89,12 @@ function ConfigWindow:InitializeConfig()
       },
       disabledAlerts = {
         type = 'toggle',
-        name = 'Disable Reaper alerts',
-        desc = 'Disable Reaper death alerts',
+        name = 'Disable alerts',
+        desc = 'Disable all death alerts',
         width = "full",
         order = 2,
         get = function(info) return Config:Get("disabledAlerts") end,
         set = function(info, value) Config:Set("disabledAlerts", value) end,
-      },
-      disabledOtherAlerts = {
-        type = 'toggle',
-        name = 'Disable Blizzard & Deathlog alerts',
-        desc = 'Disable Blizzard & Deathlog death alerts',
-        width = "full",
-        order = 3,
       },
       minLevel = {
         type = 'range',
@@ -100,7 +103,7 @@ function ConfigWindow:InitializeConfig()
         min = 1,
         max = 60,
         step = 1,
-        order = 4,
+        order = 3,
         width = "double",
         get = function(info) return Config:Get("minLevel") end,
         set = function(info, value) Config:Set("minLevel", value) end,
@@ -108,9 +111,19 @@ function ConfigWindow:InitializeConfig()
       alertDuration = {
         type = 'range',
         name = 'Alert duration',
-        desc = 'Duration of alert shown',
+        desc = 'Duration of death alert',
         min = 1,
         max = 10,
+        step = 1,
+        order = 4,
+        width = "double",
+      },
+      totalAlerts = {
+        type = 'range',
+        name = 'Total alerts',
+        desc = 'Total death alerts visible at once',
+        min = 1,
+        max = 5,
         step = 1,
         order = 5,
         width = "double",
@@ -154,7 +167,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Flush death alerts queue',
         order = 10,
         func = function()
-          self:ShowTestToast()
+          self:FlushQueue()
         end,
       },
       spacer2 = {
