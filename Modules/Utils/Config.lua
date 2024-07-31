@@ -7,7 +7,7 @@ Config.__index = Config
 
 local defaultConfig = {
   disabledAlerts = false,
-  minLevel = 1,
+  minLevel = 10,
   alertDuration = 6
 }
 

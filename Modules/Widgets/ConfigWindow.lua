@@ -120,21 +120,11 @@ function ConfigWindow:InitializeConfig()
         get = function(info) return Config:Get("alertDuration") end,
         set = function(info, value) Config:Set("alertDuration", value) end,
       },
-      totalAlerts = {
-        type = 'range',
-        name = 'Total alerts',
-        desc = 'Total death alerts visible at once',
-        min = 1,
-        max = 5,
-        step = 1,
-        order = 5,
-        width = "double",
-      },
       togglePosition = {
         type = 'execute',
         name = 'Toggle Position',
         desc = 'Toggle death alert position',
-        order = 6,
+        order = 5,
         func = function()
           self:ShowTestToast()
         end,
@@ -143,7 +133,7 @@ function ConfigWindow:InitializeConfig()
         type = 'execute',
         name = 'Reset Position',
         desc = 'Reset death alert position',
-        order = 7,
+        order = 6,
         func = function()
           self:ShowTestToast()
         end,
@@ -151,14 +141,14 @@ function ConfigWindow:InitializeConfig()
       spacer1 = {
         type = 'description',
         name = '',
-        order = 8,
+        order = 7,
         width = "full",
       },
       testAlert = {
         type = 'execute',
         name = 'Test Alert',
         desc = 'Test a death alert',
-        order = 9,
+        order = 8,
         func = function()
           self:ShowTestToast()
         end,
@@ -167,7 +157,7 @@ function ConfigWindow:InitializeConfig()
         type = 'execute',
         name = 'Flush Queue',
         desc = 'Flush death alerts queue',
-        order = 10,
+        order = 9,
         func = function()
           self:FlushQueue()
         end,
@@ -175,14 +165,14 @@ function ConfigWindow:InitializeConfig()
       spacer2 = {
         type = 'description',
         name = '',
-        order = 11,
+        order = 10,
         width = "full",
       },
       reset = {
         type = 'execute',
         name = 'Reset to Defaults',
         desc = 'Reset configuration to default values',
-        order = 12,
+        order = 11,
         func = function()
           Config:Reset()
           AceConfigDialog:SelectGroup("Reaper")
