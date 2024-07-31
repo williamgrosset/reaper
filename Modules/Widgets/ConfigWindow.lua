@@ -20,8 +20,10 @@ function ConfigWindow:Open()
 end
 
 function ConfigWindow:ShowTestToast()
-  if self.manager then
-    self.manager:addToast("Rogue", "Fable", 52, "Ravasaur Hunter", 50)
+  local manager = ToastManager:GetInstance()
+
+  if manager then
+    manager:addToast("Rogue", "Fable", 52, "Ravasaur Hunter", 50)
   else
     Reaper:Print("ToastManager not initialized.")
   end
@@ -109,17 +111,26 @@ function ConfigWindow:InitializeConfig()
           self:ShowTestToast()
         end,
       },
+      flushQueue = {
+        type = 'execute',
+        name = 'Flush Queue',
+        desc = 'Flush death alerts queue',
+        order = 10,
+        func = function()
+          self:ShowTestToast()
+        end,
+      },
       spacer2 = {
         type = 'description',
         name = '',
-        order = 10,
+        order = 11,
         width = "full",
       },
       reset = {
         type = 'execute',
         name = 'Reset to Defaults',
         desc = 'Reset configuration to default values',
-        order = 11,
+        order = 12,
         func = function()
           Config:Reset()
           AceConfigDialog:SelectGroup("Reaper")
@@ -137,7 +148,6 @@ function ConfigWindow:new()
   Reaper:Print("ConfigWindow Created")
 
   local self = setmetatable({}, ConfigWindow)
-  self.manager = ToastManager:new(3)
   self:InitializeConfig()
 
   return self

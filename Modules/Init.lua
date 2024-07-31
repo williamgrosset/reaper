@@ -11,6 +11,9 @@ local Config = Reaper.Config
 ---@class ConfigWindow
 local ConfigWindow = Reaper.ConfigWindow
 
+---@class ToastManager
+local ToastManager = Reaper.ToastManager
+
 ---@param self Init
 local function registerEvents(self)
   Reaper:Print("Events Registered")
@@ -23,6 +26,7 @@ function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
   Config:Initialize()
   ConfigWindow:RegisterSlashCommand()
+  ToastManager:Initialize(3)
 end
 
 function Init:OnPlayerLogin()

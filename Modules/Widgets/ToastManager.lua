@@ -8,14 +8,34 @@ ToastManager.__index = ToastManager
 ---@class DeathToast
 local DeathToast = Reaper.DeathToast
 
+-- Singleton
+local instance
+
 ---@param limit number
 ---@return ToastManager
 function ToastManager:new(limit)
+  if instance then
+    return instance
+  end
+
   local self = setmetatable({}, ToastManager)
   self.toasts = {}
   self.limit = limit or 5
   self.startPosition = { x = 0, y = -UIParent:GetHeight() / 4 }
-  return self
+  instance = self
+  return instance
+end
+
+---@return ToastManager
+function ToastManager:GetInstance()
+  return instance
+end
+
+---@param limit number
+---@return ToastManager
+function ToastManager:Initialize(limit)
+  instance = ToastManager:new(limit)
+  return instance
 end
 
 ---@param class string
