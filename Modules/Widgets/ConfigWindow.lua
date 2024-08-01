@@ -20,10 +20,10 @@ local instance
 
 local testValues = {
   { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp", creatureLevel = 57 },
-  { class = "Rogue", playerName = "Fable", playerLevel = 52, creatureName = "Ravasaur Hunter", creatureLevel = 50 },
-  { class = "Warrior", playerName = "Conan", playerLevel = 36, creatureName = "Bloodscalp Berserker", creatureLevel = 37 },
-  { class = "Druid", playerName = "Elune", playerLevel = 28, creatureName = "Felmusk Felsworn", creatureLevel = 26 },
-  { class = "Hunter", playerName = "Legolas", playerLevel = 14, creatureName = "Rabid Thistle Boar", creatureLevel = 13 },
+  { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter", creatureLevel = 50 },
+  { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker", creatureLevel = 37 },
+  { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn", creatureLevel = 26 },
+  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear", creatureLevel = 13 },
 }
 
 local function getRandomTestValue()
