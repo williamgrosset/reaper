@@ -18,6 +18,19 @@ local ToastManager = Reaper.ToastManager
 -- Singleton
 local instance
 
+local testValues = {
+  { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp", creatureLevel = 57 },
+  { class = "Rogue", playerName = "Fable", playerLevel = 52, creatureName = "Ravasaur Hunter", creatureLevel = 50 },
+  { class = "Warrior", playerName = "Conan", playerLevel = 36, creatureName = "Bloodscalp Berserker", creatureLevel = 37 },
+  { class = "Druid", playerName = "Elune", playerLevel = 28, creatureName = "Felmusk Felsworn", creatureLevel = 26 },
+  { class = "Hunter", playerName = "Legolas", playerLevel = 14, creatureName = "Rabid Thistle Boar", creatureLevel = 13 },
+}
+
+local function getRandomTestValue()
+  local index = math.random(1, #testValues)
+  return testValues[index]
+end
+
 local function initializeCommand()
   SLASH_REAPER1 = "/reaper"
   SlashCmdList["REAPER"] = function()
@@ -58,22 +71,19 @@ end
 
 function ConfigWindow:ShowTestToast()
   local manager = ToastManager:GetInstance()
-
-  if manager then
-    manager:addToast("Rogue", "Fable", 52, "Ravasaur Hunter", 50)
-  else
-    Reaper:Print("ToastManager not initialized.")
-  end
+  local testValue = getRandomTestValue()
+  manager:addToast(
+    testValue.class,
+    testValue.playerName,
+    testValue.playerLevel,
+    testValue.creatureName,
+    testValue.creatureLevel
+  )
 end
 
 function ConfigWindow:FlushQueue()
   local manager = ToastManager:GetInstance()
-
-  if manager then
-    manager:flush()
-  else
-    Reaper:Print("ToastManager not initialized.")
-  end
+  manager:flush()
 end
 
 function ConfigWindow:InitializeConfig()
