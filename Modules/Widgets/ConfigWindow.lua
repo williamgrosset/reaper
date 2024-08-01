@@ -97,14 +97,14 @@ function ConfigWindow:InitializeConfig()
         name = 'General Settings',
         order = 1,
       },
-      disabledAlerts = {
+      alertsEnabled = {
         type = 'toggle',
-        name = 'Disable alerts',
-        desc = 'Disable all death alerts',
+        name = 'Enable alerts',
+        desc = 'Enable all death alerts',
         width = "full",
         order = 2,
-        get = function(info) return Config:Get("disabledAlerts") end,
-        set = function(info, value) Config:Set("disabledAlerts", value) end,
+        get = function(info) return Config:Get("alertsEnabled") end,
+        set = function(info, value) Config:Set("alertsEnabled", value) end,
       },
       minLevel = {
         type = 'range',

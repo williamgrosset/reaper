@@ -6,7 +6,7 @@ Reaper.Config = Config
 Config.__index = Config
 
 local defaultConfig = {
-  disabledAlerts = false,
+  alertsEnabled = true,
   minLevel = 10,
   alertDuration = 6
 }

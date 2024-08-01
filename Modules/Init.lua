@@ -17,10 +17,10 @@ local ToastManager = Reaper.ToastManager
 ---@param playerLevel number
 ---@return boolean
 local function verifyAlert(playerLevel)
-  local disabledAlerts = Config:Get("disabledAlerts")
+  local alertsEnabled = Config:Get("alertsEnabled")
   local minLevel = Config:Get("minLevel")
 
-  if not disabledAlerts and playerLevel >= minLevel then
+  if alertsEnabled and playerLevel >= minLevel then
     return true
   end
 
