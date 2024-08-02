@@ -69,6 +69,16 @@ function ConfigWindow:Open()
   AceConfigDialog:Open("Reaper")
 end
 
+function ConfigWindow:ToggleAnchor()
+  local manager = ToastManager:GetInstance()
+  manager:ToggleAnchorVisibility()  
+end
+
+function ConfigWindow:ResetAnchor()
+  local manager = ToastManager:GetInstance()
+  manager:ResetAnchor()  
+end
+
 function ConfigWindow:ShowTestToast()
   local manager = ToastManager:GetInstance()
   local testValue = getRandomTestValue()
@@ -136,7 +146,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Toggle death alert position',
         order = 5,
         func = function()
-          self:ShowTestToast()
+          self:ToggleAnchor()
         end,
       },
       resetPosition = {
@@ -145,7 +155,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Reset death alert position',
         order = 6,
         func = function()
-          self:ShowTestToast()
+          self:ResetAnchor()
         end,
       },
       spacer1 = {
