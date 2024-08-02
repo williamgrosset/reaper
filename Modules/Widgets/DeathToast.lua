@@ -151,7 +151,7 @@ local function createClassIcon(self, class)
   classIcon:SetBackdropBorderColor(color.red, color.green, color.blue)
 
   local icon = classIcon:CreateTexture(nil, "ARTWORK")
-  icon:SetTexture("Interface\\Addons\\Reaper\\Icons\\" .. class)
+  icon:SetTexture("Interface\\Addons\\Reaper\\Icons\\Classes\\" .. class)
   icon:SetSize(42, 42)
   icon:SetPoint("CENTER", classIcon, "CENTER", 0, 0)
 
