@@ -99,7 +99,6 @@ function ToastManager:addToast(class, playerName, playerLevel, creatureName, cre
   for i, existingToast in ipairs(self.toasts) do
     local point, relativeTo, relativePoint, xOffset, yOffset = existingToast.toast:GetPoint()
     existingToast.toast:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset + 72)
-    existingToast.toast:Show()
   end
 
   local toast = DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
