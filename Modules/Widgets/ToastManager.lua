@@ -21,7 +21,6 @@ function ToastManager:new(limit)
   local self = setmetatable({}, ToastManager)
   self.toasts = {}
   self.limit = limit or 5
-  self.startPosition = { x = 0, y = -UIParent:GetHeight() / 4 }
   instance = self
   return instance
 end
@@ -56,7 +55,7 @@ function ToastManager:addToast(class, playerName, playerLevel, creatureName, cre
   end
 
   local toast = DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
-  toast.toast:SetPoint("TOP", UIParent, "TOP", self.startPosition.x, self.startPosition.y)
+  toast.toast:SetPoint("TOP", UIParent, "TOP", 0, -UIParent:GetHeight() / 4)
   table.insert(self.toasts, toast)
 
   toast.toast:ShowToast()
