@@ -45,61 +45,64 @@ local function getClassName(classId)
   return className
 end
 
----@param sourceId number
+---@param deathSourceId number
 ---@return string
-local function getSourceName(sourceId)
-  -- Check DNL data
-  if id_to_npc[sourceId] then
-    return id_to_npc[sourceId]
-  elseif sourceId == -2 then
+local function getDeathSourceName(deathSourceId)
+  -- Check global DNL data
+  if id_to_npc[deathSourceId] then
+    return id_to_npc[deathSourceId]
+  elseif deathSourceId == -2 then
     return "Drowned"
-  elseif sourceId == -3 then
+  elseif deathSourceId == -3 then
     return "Fell"
-  elseif sourceId == -4 then
+  elseif deathSourceId == -4 then
     return "Fatigued"
-  elseif sourceId == -5 then
+  elseif deathSourceId == -5 then
     return "Burned"
-  elseif sourceId == -6 then
+  elseif deathSourceId == -6 then
     return "Lava Burned"
-  elseif sourceId == -7 then
+  elseif deathSourceId == -7 then
     return "Slimed"
   else
     return "??"
   end
 end
 
----@param self Init
-local function registerEvents(self)
+---@param classId number
+---@param playerName string
+---@param playerLevel number
+---@param deathSourceId number
+local function onDeath(classId, playerName, playerLevel, deathSourceId)
+  local className = getClassName(classId)
+  local deathSourceName = getDeathSourceName(deathSourceId)
+
+  if verifyAlert(playerLevel) then
+    Reaper:Print("Death Alert Allowed")
+
+    local manager = ToastManager:GetInstance()
+
+    manager:addToast(
+      className,
+      playerName,
+      playerLevel,
+      deathSourceName,
+      99
+    )
+  end
+end
+
+local function registerEvents()
   Reaper:Print("Events Registered")
 
-  local manager = ToastManager:GetInstance()
-
+  -- Hook into DNL
   DeathNotificationLib_HookOnNewEntry(function(_player_data, _checksum, num_peer_checks, in_guild)
-    Reaper:Print("Death Occurred")
-    
-    local classId = _player_data.class_id
-    local playerName = _player_data.name
-    local playerLevel = _player_data.level
-    local sourceId = _player_data.source_id
-    local className = getClassName(classId)
-    local sourceName = getSourceName(sourceId)
-
-    if verifyAlert(playerLevel) then
-      Reaper:Print("Death Alert Allowed")
-
-      manager:addToast(
-        className,
-        playerName,
-        playerLevel,
-        sourceName,
-        99
-      )
-    end
+    onDeath(_player_data.class_id, _player_data.name, _player_data.level, _player_data.source_id)
   end)
 end
 
 function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
+
   Config:Initialize()
   ConfigWindow:Initialize()
   ToastManager:Initialize(3)
@@ -108,5 +111,6 @@ end
 
 function Init:OnPlayerLogin()
   Reaper:Print("Player Logged In")
-  registerEvents(self)
+
+  registerEvents()
 end
