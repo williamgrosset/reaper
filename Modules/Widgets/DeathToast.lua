@@ -71,8 +71,10 @@ local function createToast(self, playerLevel)
     toast:Show()
     toast.fadeIn:Play()
     toast.fadeOut:Play()
+
+    local soundEnabled = Config:Get("soundEnabled")
   
-    if playerLevel == 60 then
+    if soundEnabled and playerLevel == 60 then
       playSound()
     end
   end

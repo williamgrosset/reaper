@@ -26,6 +26,7 @@ local testValues = {
   { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear", creatureLevel = 13 },
 }
 
+---@return { class: string, playerName: string, playerLevel: number, creatureName: string, creatureLevel: number }
 local function getRandomTestValue()
   local index = math.random(1, #testValues)
   return testValues[index]
@@ -71,12 +72,12 @@ end
 
 function ConfigWindow:ToggleAnchor()
   local manager = ToastManager:GetInstance()
-  manager:ToggleAnchorVisibility()  
+  manager:ToggleAnchorVisibility()
 end
 
 function ConfigWindow:ResetAnchor()
   local manager = ToastManager:GetInstance()
-  manager:ResetAnchor()  
+  manager:ResetAnchor()
 end
 
 function ConfigWindow:ShowTestToast()
@@ -116,6 +117,15 @@ function ConfigWindow:InitializeConfig()
         get = function(info) return Config:Get("alertsEnabled") end,
         set = function(info, value) Config:Set("alertsEnabled", value) end,
       },
+      soundEnabled = {
+        type = 'toggle',
+        name = 'Enable 60 death alert sound',
+        desc = 'Enable 60 death alert sound',
+        width = "full",
+        order = 3,
+        get = function(info) return Config:Get("soundEnabled") end,
+        set = function(info, value) Config:Set("soundEnabled", value) end,
+      },
       minLevel = {
         type = 'range',
         name = 'Minimum level',
@@ -123,7 +133,7 @@ function ConfigWindow:InitializeConfig()
         min = 1,
         max = 60,
         step = 1,
-        order = 3,
+        order = 4,
         width = "double",
         get = function(info) return Config:Get("minLevel") end,
         set = function(info, value) Config:Set("minLevel", value) end,
@@ -135,7 +145,7 @@ function ConfigWindow:InitializeConfig()
         min = 1,
         max = 10,
         step = 1,
-        order = 4,
+        order = 5,
         width = "double",
         get = function(info) return Config:Get("alertDuration") end,
         set = function(info, value) Config:Set("alertDuration", value) end,
@@ -144,7 +154,7 @@ function ConfigWindow:InitializeConfig()
         type = 'execute',
         name = 'Toggle Position',
         desc = 'Toggle death alert position',
-        order = 5,
+        order = 6,
         func = function()
           self:ToggleAnchor()
         end,
@@ -153,7 +163,7 @@ function ConfigWindow:InitializeConfig()
         type = 'execute',
         name = 'Reset Position',
         desc = 'Reset death alert position',
-        order = 6,
+        order = 7,
         func = function()
           self:ResetAnchor()
         end,
@@ -161,14 +171,14 @@ function ConfigWindow:InitializeConfig()
       spacer1 = {
         type = 'description',
         name = '',
-        order = 7,
+        order = 8,
         width = "full",
       },
       testAlert = {
         type = 'execute',
         name = 'Test Alert',
         desc = 'Test a death alert',
-        order = 8,
+        order = 9,
         func = function()
           self:ShowTestToast()
         end,
@@ -177,7 +187,7 @@ function ConfigWindow:InitializeConfig()
         type = 'execute',
         name = 'Flush Queue',
         desc = 'Flush death alerts queue',
-        order = 9,
+        order = 10,
         func = function()
           self:FlushQueue()
         end,
@@ -185,14 +195,14 @@ function ConfigWindow:InitializeConfig()
       spacer2 = {
         type = 'description',
         name = '',
-        order = 10,
+        order = 11,
         width = "full",
       },
       reset = {
         type = 'execute',
         name = 'Reset to Defaults',
         desc = 'Reset configuration to default values',
-        order = 11,
+        order = 12,
         func = function()
           Config:Reset()
           AceConfigDialog:SelectGroup("Reaper")

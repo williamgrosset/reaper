@@ -7,7 +7,8 @@ Config.__index = Config
 
 local defaultConfig = {
   alertsEnabled = true,
-  minLevel = 10,
+  soundEnabled = true,
+  minLevel = 1,
   alertDuration = 6
 }
 
