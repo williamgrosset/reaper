@@ -11,9 +11,14 @@ local Config = Reaper.Config
 ---@class Rarity
 local Rarity = Reaper.Rarity
 
+local function playSound()
+  PlaySoundFile("Sound\\Interface\\RaidWarning.ogg", "Master")
+end
+
 ---@param self DeathToast
+---@param playerLevel number
 ---@return toast Frame
-local function createToast(self)
+local function createToast(self, playerLevel)
   local toast = CreateFrame("Frame", "CustomTooltip", UIParent, "BackdropTemplate")
   toast:Hide()
 
@@ -65,6 +70,10 @@ local function createToast(self)
     toast:Show()
     toast.fadeIn:Play()
     toast.fadeOut:Play()
+  
+    if playerLevel == 60 then
+      playSound()
+    end
   end
 
   return toast
@@ -184,7 +193,7 @@ function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLe
 
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
-  self.toast = createToast(self)
+  self.toast = createToast(self, playerLevel)
   self.classIcon = createClassIcon(self, class)
 
   addPlayerLabel(self, playerName, playerLevel)
