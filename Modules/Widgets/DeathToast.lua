@@ -12,7 +12,8 @@ local Config = Reaper.Config
 local Rarity = Reaper.Rarity
 
 local function playSound()
-  PlaySoundFile("Sound\\Interface\\RaidWarning.ogg", "Master")
+  PlaySoundFile("Interface\\Addons\\Reaper\\Sounds\\RaidWarning.ogg", "Master")
+  PlaySoundFile("Interface\\Addons\\Reaper\\Sounds\\UndeadMaleLaugh.ogg", "Master")
 end
 
 ---@param self DeathToast

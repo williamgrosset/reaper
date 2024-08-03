@@ -10,6 +10,7 @@ include_patterns = [
     "*.xml",
     "*.toc",
     "*.tga",
+    "*.ogg",
     "README.md",
     "LICENSE"
 ]
