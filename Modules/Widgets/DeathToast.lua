@@ -12,8 +12,8 @@ local Config = Reaper.Config
 local Rarity = Reaper.Rarity
 
 local function playSound()
-  PlaySoundFile("Interface\\Addons\\Reaper\\Sounds\\RaidWarning.ogg", "Master")
-  PlaySoundFile("Interface\\Addons\\Reaper\\Sounds\\UndeadMaleLaugh.ogg", "Master")
+  PlaySoundFile("Interface\\Addons\\Reaper\\Assets\\Sounds\\RaidWarning.ogg", "Master")
+  PlaySoundFile("Interface\\Addons\\Reaper\\Assets\\Sounds\\UndeadMaleLaugh.ogg", "Master")
 end
 
 ---@param self DeathToast
@@ -120,7 +120,7 @@ local function addCreatureLabel(self, text, level)
   mainText:SetText(text)
 
   local skullTexture = container:CreateTexture(nil, "ARTWORK")
-  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Icons\\Skull")
+  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Skull")
   skullTexture:SetSize(16, 16)
 
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -161,7 +161,7 @@ local function createClassIcon(self, class)
   classIcon:SetBackdropBorderColor(color.red, color.green, color.blue)
 
   local icon = classIcon:CreateTexture(nil, "ARTWORK")
-  icon:SetTexture("Interface\\Addons\\Reaper\\Icons\\Classes\\" .. class)
+  icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Classes\\" .. class)
   icon:SetSize(42, 42)
   icon:SetPoint("CENTER", classIcon, "CENTER", 0, 0)
 

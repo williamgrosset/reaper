@@ -32,7 +32,7 @@ local function createAnchor()
   anchor.texture = anchor:CreateTexture(nil, "BACKGROUND")
   anchor.texture:SetSize(36, 36)
   anchor.texture:SetPoint("LEFT", anchor, "LEFT", 10, 0)
-  anchor.texture:SetTexture("Interface\\Addons\\Reaper\\Icons\\Config\\Anchor")
+  anchor.texture:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Config\\Anchor")
 
   anchor.label = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
   anchor.label:SetPoint("LEFT", anchor.texture, "RIGHT", 10, 0)
