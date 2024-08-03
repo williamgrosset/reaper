@@ -88,16 +88,16 @@ end
 local function addPlayerLabel(self, text, level)
   local container = CreateFrame("Frame", nil, self.toast)
     
-  local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-  mainText:SetText(text)
-
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   levelText:SetText("(" .. level .. ")")
 
   local color = self.rarity:getColor()
   levelText:SetTextColor(color.red, color.green, color.blue)
 
-  local totalWidth = mainText:GetStringWidth() + levelText:GetStringWidth()
+  local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+  mainText:SetText(text)
+
+  local totalWidth = levelText:GetStringWidth() + mainText:GetStringWidth()
 
   local iconPaddingLeft = 8
   local iconPaddingRight = 8
@@ -108,8 +108,8 @@ local function addPlayerLabel(self, text, level)
   local toastWidth = self.toast:GetWidth()
   container:SetPoint("LEFT", self.classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, 10)
     
-  mainText:SetPoint("LEFT", container, "LEFT")
-  levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
+  levelText:SetPoint("LEFT", container, "LEFT")
+  mainText:SetPoint("LEFT", levelText, "RIGHT", 3, 0)
 end
 
 ---@param self DeathToast
