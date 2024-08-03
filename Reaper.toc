@@ -14,6 +14,23 @@ Libs/Ace/AceConfig-3.0/AceConfig-3.0.xml
 Libs/DNL/ChatThrottleLib.lua
 Libs/DNL/DeathNotificationLib/NPCS/id_to_npc_classic_en.lua
 Libs/DNL/DeathNotificationLib/NPCS/npc_to_id_classic_en.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_cn.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_cn.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_de.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_de.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_es.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_es.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_fr.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_fr.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_it.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_it.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_ko.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_ko.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_pt.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_pt.lua
+Libs/DNL/DeathNotificationLib/NPCs/id_to_npc_classic_ru.lua
+Libs/DNL/DeathNotificationLib/NPCs/npc_to_id_classic_ru.lua
+Libs/DNL/DeathNotificationLib/table_localization.lua
 Libs/DNL/DeathNotificationLib/DeathNotificationLib.lua
 
 ## Modules
