@@ -85,8 +85,7 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
       className,
       playerName,
       playerLevel,
-      deathSourceName,
-      99
+      deathSourceName
     )
   end
 end

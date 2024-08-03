@@ -88,8 +88,7 @@ end
 ---@param playerName string
 ---@param playerLevel number
 ---@param creatureName string
----@param creatureLevel number
-function ToastManager:addToast(class, playerName, playerLevel, creatureName, creatureLevel)
+function ToastManager:addToast(class, playerName, playerLevel, creatureName)
   -- Remove oldest toast if we reached limit
   if #self.toasts >= self.limit then
     local oldestToast = table.remove(self.toasts, 1)
@@ -101,7 +100,7 @@ function ToastManager:addToast(class, playerName, playerLevel, creatureName, cre
     existingToast.toast:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset + 72)
   end
 
-  local toast = DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
+  local toast = DeathToast:new(class, playerName, playerLevel, creatureName)
   toast.toast:SetPoint("TOP", self.anchor, "TOP", 0, 72)
   table.insert(self.toasts, toast)
 

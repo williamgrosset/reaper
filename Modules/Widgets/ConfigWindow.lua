@@ -19,14 +19,14 @@ local ToastManager = Reaper.ToastManager
 local instance
 
 local testValues = {
-  { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp", creatureLevel = 57 },
-  { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter", creatureLevel = 50 },
-  { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker", creatureLevel = 37 },
-  { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn", creatureLevel = 26 },
-  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear", creatureLevel = 13 },
+  { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp" },
+  { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter" },
+  { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker" },
+  { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn" },
+  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear" }
 }
 
----@return { class: string, playerName: string, playerLevel: number, creatureName: string, creatureLevel: number }
+---@return { class: string, playerName: string, playerLevel: number, creatureName: string }
 local function getRandomTestValue()
   local index = math.random(1, #testValues)
   return testValues[index]
@@ -87,8 +87,7 @@ function ConfigWindow:ShowTestToast()
     testValue.class,
     testValue.playerName,
     testValue.playerLevel,
-    testValue.creatureName,
-    testValue.creatureLevel
+    testValue.creatureName
   )
 end
 

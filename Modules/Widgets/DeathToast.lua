@@ -114,22 +114,18 @@ end
 
 ---@param self DeathToast
 ---@param text string
----@param level number
-local function addCreatureLabel(self, text, level)
+local function addCreatureLabel(self, text)
   local container = CreateFrame("Frame", nil, self.toast)
 
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
   mainText:SetText(text)
+  mainText:SetTextColor(1, 0, 0)
 
   local skullTexture = container:CreateTexture(nil, "ARTWORK")
   skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Skull")
   skullTexture:SetSize(16, 16)
 
-  local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-  levelText:SetText("(" .. level .. ")")
-  levelText:SetTextColor(1, 0, 0)
-
-  local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + levelText:GetStringWidth() + 4
+  local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
 
   local iconPaddingLeft = 8
   local iconPaddingRight = 8
@@ -142,7 +138,6 @@ local function addCreatureLabel(self, text, level)
 
   skullTexture:SetPoint("LEFT", container, "LEFT")
   mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
-  levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
 end
 
 ---@param self DeathToast
@@ -189,9 +184,8 @@ end
 ---@param playerName string
 ---@param playerLevel number
 ---@param creatureName string
----@param creatureLevel number
 ---@return DeathToast
-function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLevel)
+function DeathToast:new(class, playerName, playerLevel, creatureName)
   Reaper:Print("DeathToast Created")
 
   local self = setmetatable({}, DeathToast)
@@ -200,7 +194,7 @@ function DeathToast:new(class, playerName, playerLevel, creatureName, creatureLe
   self.classIcon = createClassIcon(self, class)
 
   addPlayerLabel(self, playerName, playerLevel)
-  addCreatureLabel(self, creatureName, creatureLevel)
+  addCreatureLabel(self, creatureName)
 
   if playerLevel == 60 then
     addLegendaryDragon(self)
