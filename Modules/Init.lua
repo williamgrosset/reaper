@@ -41,6 +41,10 @@ end
 ---@param classId number
 ---@return string
 local function getClassName(classId)
+  if classId == nil then
+    return ""
+  end
+
   local className, _, _ = GetClassInfo(classId)
   return className
 end

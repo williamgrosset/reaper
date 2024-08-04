@@ -158,7 +158,13 @@ local function createClassIcon(self, class)
   classIcon:SetBackdropBorderColor(color.red, color.green, color.blue)
 
   local icon = classIcon:CreateTexture(nil, "ARTWORK")
-  icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Classes\\" .. class)
+
+  if class == "" then
+    icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Misc\\Tombstone")
+  else
+    icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Classes\\" .. class)
+  end
+
   icon:SetSize(42, 42)
   icon:SetPoint("CENTER", classIcon, "CENTER", 0, 0)
 
