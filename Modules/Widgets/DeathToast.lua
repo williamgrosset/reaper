@@ -134,7 +134,7 @@ local function addCreatureLabel(self, text)
   mainText:SetTextColor(1, 0, 0)
 
   local skullTexture = container:CreateTexture(nil, "ARTWORK")
-  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Skull")
+  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Skull")
   skullTexture:SetSize(16, 16)
 
   local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
