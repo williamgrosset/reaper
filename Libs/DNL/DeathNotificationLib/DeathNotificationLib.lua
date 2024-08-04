@@ -44,6 +44,7 @@ local _, _, _, tocversion = GetBuildInfo()
 
 local death_alerts_channel = "hcdeathalertschannel"
 local death_alerts_channel_pw = "hcdeathalertschannelpw"
+local hardcore_deaths_channel = "HardcoreDeaths"
 
 local throttle_player = {}
 local shadowbanned = {}
@@ -935,17 +936,19 @@ StaticPopupDialogs["CHAT_CHANNEL_PASSWORD"] = nil
 local remaining_attempts = 5
 local function deathlogJoinChannel()
 	LeaveChannelByName(death_alerts_channel)
+	LeaveChannelByName(hardcore_deaths_channel)
 
 	local delay = 3.0
 	C_Timer.After(delay, function()
 		JoinChannelByName(death_alerts_channel, death_alerts_channel_pw)
+		JoinChannelByName(hardcore_deaths_channel)
 	end)
-	local channel_num = GetChannelName(death_alerts_channel)
-
+	
 	SetCVar("hardcoreDeathAlertType", 2)
 	for i = 1, 10 do
 		if _G["ChatFrame" .. i] then
 			ChatFrame_RemoveChannel(_G["ChatFrame" .. i], death_alerts_channel)
+			ChatFrame_RemoveChannel(_G["ChatFrame" .. i], hardcore_deaths_channel)
 		end
 	end
 
@@ -965,6 +968,7 @@ local function deathlogJoinChannel()
 		JoinChannelByName(death_alerts_channel, death_alerts_channel_pw)
 	end)
 end
+
 
 local function sendNextInQueue()
 	if #deathlog_request_duel_to_death_queue > 0 then
@@ -1113,7 +1117,7 @@ local function handleEvent(self, event, ...)
 	local arg = { ... }
 	if event == "CHAT_MSG_CHANNEL" then
 		local _, channel_name = string.split(" ", arg[4])
-		if channel_name ~= death_alerts_channel then
+		if channel_name ~= death_alerts_channel and channel_name ~= hardcore_deaths_channel then
 			return
 		end
 		local command, msg, _doublechecksum = string.split(COMM_COMMAND_DELIM, arg[1])
