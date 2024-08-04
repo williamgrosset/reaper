@@ -142,7 +142,7 @@ function ConfigWindow:InitializeConfig()
         name = 'Alert duration',
         desc = 'Duration of death alert',
         min = 1,
-        max = 12,
+        max = 15,
         step = 1,
         order = 5,
         width = "double",
