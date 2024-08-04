@@ -17,8 +17,10 @@ local function setTier(self, level)
     return "rare"
   elseif level <= 33 and level >= 18 then
     return "uncommon"
-  else
+  elseif level <= 17 and level >= 10 then
     return "common"
+  else
+    return "poor"
   end
 end
 
@@ -35,8 +37,10 @@ local function setColor(self)
     return { red = 0, green = 0.439, blue = 0.867 }
   elseif tier == "uncommon" then
     return { red = 0.118 , green = 1, blue = 0 }
-  else
+  elseif tier == "common" then
     return { red = 1, green = 1, blue = 1 }
+  else
+    return { red = 0.616, green = 0.616, blue = 0.616 }
   end
 end
 

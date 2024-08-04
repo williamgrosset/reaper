@@ -23,7 +23,8 @@ local testValues = {
   { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter" },
   { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker" },
   { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn" },
-  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear" }
+  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear" },
+  { class = "Mage", playerName = "Merlin", playerLevel = 7, creatureName = "Prowler" }
 }
 
 ---@return { class: string, playerName: string, playerLevel: number, creatureName: string }
