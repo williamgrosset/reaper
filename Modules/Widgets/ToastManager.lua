@@ -19,27 +19,19 @@ local defaultAnchorPos = {
 local function createAnchor()
   local anchor = CreateFrame("Frame", "ToastAnchorFrame", UIParent, "BackdropTemplate")
   anchor:Hide()
-  anchor:SetSize(175, 50)
+  anchor:SetSize(124, 40)
   anchor:SetPoint("TOP", UIParent, "TOP", defaultAnchorPos.x, defaultAnchorPos.y)
 
   anchor:SetBackdrop({
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
     tile = true, tileSize = 32, edgeSize = 12,
-    insets = { left = 8, right = 8, top = 8, bottom = 8 }
+    insets = { left = 0, right = 0, top = 0, bottom = 0 }
   })
 
-  anchor.texture = anchor:CreateTexture(nil, "BACKGROUND")
-  anchor.texture:SetSize(36, 36)
-  anchor.texture:SetPoint("LEFT", anchor, "LEFT", 10, 0)
-  anchor.texture:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Config\\Anchor")
-
   anchor.label = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-  anchor.label:SetPoint("LEFT", anchor.texture, "RIGHT", 10, 0)
-  anchor.label:SetText("Reaper Anchor")
-
-  anchor.texture:SetPoint("CENTER", anchor, "CENTER", -60, 0)
-  anchor.label:SetPoint("CENTER", anchor, "CENTER", 10, 0)
+  anchor.label:SetPoint("CENTER", anchor, "CENTER", 0, 0)
+  anchor.label:SetText("Reaper anchor")
 
   anchor:SetMovable(true)
   anchor:EnableMouse(true)
