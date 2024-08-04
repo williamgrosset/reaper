@@ -67,6 +67,18 @@ local function createToast(self, playerLevel)
   toast.fadeIn = fadeIn
   toast.fadeOut = fadeOut
 
+  toast:SetScript("OnEnter", function(self)
+    if fadeOut:IsPlaying() then
+      fadeOut:Pause()
+    end
+  end)
+
+  toast:SetScript("OnLeave", function(self)
+    if fadeOut:IsPaused() then
+      fadeOut:Play()
+    end
+  end)
+
   toast.ShowToast = function()
     toast:Show()
     toast.fadeIn:Play()
