@@ -46,6 +46,7 @@ local function getClassName(classId)
   end
 
   local className, _, _ = GetClassInfo(classId)
+
   return className
 end
 
@@ -84,7 +85,6 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
     Reaper:Print("Death Alert Allowed")
 
     local manager = ToastManager:GetInstance()
-
     manager:addToast(
       className,
       playerName,
@@ -107,8 +107,8 @@ function Init:OnAddonLoaded()
   Reaper:Print("Addon Loaded")
 
   Config:Initialize()
-  ConfigWindow:Initialize()
   ToastManager:Initialize(3)
+  ConfigWindow:Initialize()
   disableExternalUIAlerts()
 end
 
