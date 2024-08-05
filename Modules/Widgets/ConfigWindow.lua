@@ -15,10 +15,8 @@ local Config = Reaper.Config
 ---@class ToastManager
 local ToastManager = Reaper.ToastManager
 
--- Singleton
-local instance
-
-local testValues = {
+-- Constants
+local TEST_VALUES = {
   { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp" },
   { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter" },
   { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker" },
@@ -27,77 +25,16 @@ local testValues = {
   { class = "Mage", playerName = "Merlin", playerLevel = 7, creatureName = "Prowler" }
 }
 
+-- Singleton
+local instance
+
 ---@return { class: string, playerName: string, playerLevel: number, creatureName: string }
 local function getRandomTestValue()
-  local index = math.random(1, #testValues)
-  return testValues[index]
+  return TEST_VALUES[math.random(1, #TEST_VALUES)]
 end
 
-local function initializeCommand()
-  SLASH_REAPER1 = "/reaper"
-  SlashCmdList["REAPER"] = function()
-    local instance = ConfigWindow:new()
-    instance:Open()
-  end
-end
-
----@return ConfigWindow
-function ConfigWindow:new()
-  if instance then
-    return instance
-  end
-
-  Reaper:Print("ConfigWindow Created")
-
-  local self = setmetatable({}, ConfigWindow)
-  self:InitializeConfig()
-  instance = self
-  return instance
-end
-
----@return ConfigWindow
-function ConfigWindow:GetInstance()
-  return instance
-end
-
----@return ConfigWindow
-function ConfigWindow:Initialize()
-  instance = ConfigWindow:new()
-  initializeCommand()
-  return instance
-end
-
-function ConfigWindow:Open()
-  AceConfigDialog:Open("Reaper")
-end
-
-function ConfigWindow:ToggleAnchor()
-  local manager = ToastManager:GetInstance()
-  manager:ToggleAnchorVisibility()
-end
-
-function ConfigWindow:ResetAnchor()
-  local manager = ToastManager:GetInstance()
-  manager:ResetAnchor()
-end
-
-function ConfigWindow:ShowTestToast()
-  local manager = ToastManager:GetInstance()
-  local testValue = getRandomTestValue()
-  manager:addToast(
-    testValue.class,
-    testValue.playerName,
-    testValue.playerLevel,
-    testValue.creatureName
-  )
-end
-
-function ConfigWindow:FlushQueue()
-  local manager = ToastManager:GetInstance()
-  manager:flush()
-end
-
-function ConfigWindow:InitializeConfig()
+---@param self ConfigWindow
+local function loadOptions(self)
   local options = {
     name = "Reaper",
     handler = Reaper,
@@ -156,7 +93,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Toggle death alert position',
         order = 6,
         func = function()
-          self:ToggleAnchor()
+          self.manager:ToggleAnchorVisibility()
         end,
       },
       resetPosition = {
@@ -165,7 +102,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Reset death alert position',
         order = 7,
         func = function()
-          self:ResetAnchor()
+          self.manager:ResetAnchor()
         end,
       },
       spacer1 = {
@@ -180,7 +117,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Test a death alert',
         order = 9,
         func = function()
-          self:ShowTestToast()
+          self:GenerateTestToast()
         end,
       },
       flushQueue = {
@@ -189,7 +126,7 @@ function ConfigWindow:InitializeConfig()
         desc = 'Flush death alerts queue',
         order = 10,
         func = function()
-          self:FlushQueue()
+          self.manager:flush()
         end,
       },
       spacer2 = {
@@ -213,4 +150,53 @@ function ConfigWindow:InitializeConfig()
 
   AceConfig:RegisterOptionsTable("Reaper", options)
   AceConfigDialog:SetDefaultSize("Reaper", 440, 500) 
+end
+
+local function initializeCommand()
+  SLASH_REAPER1 = "/reaper"
+  SlashCmdList["REAPER"] = function()
+    local instance = ConfigWindow:GetInstance()
+    instance:Open()
+  end
+end
+
+---@return ConfigWindow
+function ConfigWindow:New()
+  if instance then
+    return instance
+  end
+
+  Reaper:Print("ConfigWindow Created")
+
+  local self = setmetatable({}, ConfigWindow)
+  self.manager = ToastManager:GetInstance() or ToastManager:new(3)
+  loadOptions(self)
+  instance = self
+  return instance
+end
+
+---@return ConfigWindow
+function ConfigWindow:Initialize()
+  instance = ConfigWindow:New()
+  initializeCommand()
+  return instance
+end
+
+---@return ConfigWindow
+function ConfigWindow:GetInstance()
+  return instance
+end
+
+function ConfigWindow:Open()
+  AceConfigDialog:Open("Reaper")
+end
+
+function ConfigWindow:GenerateTestToast()
+  local testValue = getRandomTestValue()
+  self.manager:addToast(
+    testValue.class,
+    testValue.playerName,
+    testValue.playerLevel,
+    testValue.creatureName
+  )
 end
