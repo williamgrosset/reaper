@@ -2,12 +2,12 @@
 
 ![demo](https://github.com/user-attachments/assets/0f2976c6-19b1-49ae-9807-fb41d537eb44)
 
-☠️ Sleek & subtle death alerts for World of Warcraft Hardcore
+☠️ Simple & subtle death alerts for World of Warcraft Hardcore
 
 ### Features
-* 📢 Display server-wide player deaths
-* 🤝 Hooks into Blizzard and Deathlog alerts
-* 🚀 Zero setup and simple config
+* 📢 Display faction-wide player deaths
+* 🤝 Hooks into Blizzard and Deathlog APIs
+* 🚀 Zero setup and simple configuration
 
 ## Download
 * Curse TODO
