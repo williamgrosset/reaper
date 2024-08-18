@@ -2,7 +2,7 @@
 
 ![demo](https://github.com/user-attachments/assets/0f2976c6-19b1-49ae-9807-fb41d537eb44)
 
-☠️ Simple & subtle death alerts for World of Warcraft Hardcore
+☠️ Subtle and configurable death alerts for World of Warcraft Classic Hardcore
 
 ### Features
 * 📢 Display faction-wide player deaths
