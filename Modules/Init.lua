@@ -15,12 +15,12 @@ local ConfigWindow = Reaper.ConfigWindow
 local ToastManager = Reaper.ToastManager
 
 local function disableExternalUIAlerts()
-  local alertsEnabled = Config:Get("alertsEnabled")
+  local alertsEnabled = Config:get("alertsEnabled")
   local deathLogSettings = deathlog_settings
 
   -- Disable Deathlog UI alerts to avoid duplication
   if alertsEnabled and deathLogSettings and deathLogSettings["DeathAlert"] then
-    Reaper:Print("Disabling external alerts")
+    Reaper:print("Disabling external alerts")
     deathLogSettings["DeathAlert"]["enable"] = false
   end
 end
@@ -28,8 +28,8 @@ end
 ---@param playerLevel number
 ---@return boolean
 local function verifyAlert(playerLevel)
-  local alertsEnabled = Config:Get("alertsEnabled")
-  local minLevel = Config:Get("minLevel")
+  local alertsEnabled = Config:get("alertsEnabled")
+  local minLevel = Config:get("minLevel")
 
   if alertsEnabled and playerLevel >= minLevel then
     return true
@@ -82,9 +82,9 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
   local deathSourceName = getDeathSourceName(deathSourceId)
 
   if verifyAlert(playerLevel) then
-    Reaper:Print("Death Alert Allowed")
+    Reaper:print("Death Alert Allowed")
 
-    local manager = ToastManager:GetInstance()
+    local manager = ToastManager:getInstance()
     manager:addToast(
       className,
       playerName,
@@ -95,7 +95,7 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
 end
 
 local function registerEvents()
-  Reaper:Print("Events Registered")
+  Reaper:print("Events Registered")
 
   -- Hook into DNL
   DeathNotificationLib_HookOnNewEntry(function(_player_data, _checksum, num_peer_checks, in_guild)
@@ -103,17 +103,17 @@ local function registerEvents()
   end)
 end
 
-function Init:OnAddonLoaded()
-  Reaper:Print("Addon Loaded")
+function Init:onAddonLoaded()
+  Reaper:print("Addon Loaded")
 
-  Config:Initialize()
-  ToastManager:Initialize(3)
-  ConfigWindow:Initialize()
+  Config:initialize()
+  ToastManager:initialize(3)
+  ConfigWindow:initialize()
   disableExternalUIAlerts()
 end
 
-function Init:OnPlayerLogin()
-  Reaper:Print("Player Logged In")
+function Init:onPlayerLogin()
+  Reaper:print("Player Logged In")
 
   registerEvents()
 end

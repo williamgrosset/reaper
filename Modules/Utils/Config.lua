@@ -12,7 +12,7 @@ local defaultConfig = {
   alertDuration = 10
 }
 
-function Config:Initialize()
+function Config:initialize()
   if not ReaperDB then
     ReaperDB = {}
   end
@@ -29,17 +29,17 @@ end
 
 ---@param key string
 ---@return any
-function Config:Get(key)
+function Config:get(key)
   return ReaperDB.config[key]
 end
 
 ---@param key string
 ---@param value any
-function Config:Set(key, value)
+function Config:set(key, value)
   ReaperDB.config[key] = value
 end
 
-function Config:Reset()
+function Config:reset()
   for k in pairs(ReaperDB.config) do
     ReaperDB.config[k] = nil
   end
@@ -48,5 +48,5 @@ function Config:Reset()
     ReaperDB.config[k] = v
   end
 
-  Reaper:Print("Configuration reset to defaults")
+  Reaper:print("Configuration reset to defaults")
 end

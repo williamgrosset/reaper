@@ -53,7 +53,7 @@ local function createToast(self, playerLevel)
   fadeInAlpha:SetSmoothing("IN")
 
   local fadeOutAlpha = fadeOut:CreateAnimation("Alpha")
-  local alertDuration = Config:Get("alertDuration")
+  local alertDuration = Config:get("alertDuration")
   fadeOutAlpha:SetFromAlpha(1)
   fadeOutAlpha:SetToAlpha(0)
   fadeOutAlpha:SetDuration(0.5)
@@ -84,7 +84,7 @@ local function createToast(self, playerLevel)
     toast.fadeIn:Play()
     toast.fadeOut:Play()
 
-    local soundEnabled = Config:Get("soundEnabled")
+    local soundEnabled = Config:get("soundEnabled")
   
     if soundEnabled and playerLevel == 60 then
       playSound()
@@ -204,7 +204,7 @@ end
 ---@param creatureName string
 ---@return DeathToast
 function DeathToast:new(class, playerName, playerLevel, creatureName)
-  Reaper:Print("DeathToast Created")
+  Reaper:print("DeathToast Created")
 
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)

@@ -51,8 +51,8 @@ local function loadOptions(self)
         desc = 'Enable all death alerts',
         width = "full",
         order = 2,
-        get = function(info) return Config:Get("alertsEnabled") end,
-        set = function(info, value) Config:Set("alertsEnabled", value) end,
+        get = function(info) return Config:get("alertsEnabled") end,
+        set = function(info, value) Config:set("alertsEnabled", value) end,
       },
       soundEnabled = {
         type = 'toggle',
@@ -60,8 +60,8 @@ local function loadOptions(self)
         desc = 'Enable 60 death alert sound',
         width = "full",
         order = 3,
-        get = function(info) return Config:Get("soundEnabled") end,
-        set = function(info, value) Config:Set("soundEnabled", value) end,
+        get = function(info) return Config:get("soundEnabled") end,
+        set = function(info, value) Config:set("soundEnabled", value) end,
       },
       minLevel = {
         type = 'range',
@@ -72,8 +72,8 @@ local function loadOptions(self)
         step = 1,
         order = 4,
         width = "double",
-        get = function(info) return Config:Get("minLevel") end,
-        set = function(info, value) Config:Set("minLevel", value) end,
+        get = function(info) return Config:get("minLevel") end,
+        set = function(info, value) Config:set("minLevel", value) end,
       },
       alertDuration = {
         type = 'range',
@@ -84,8 +84,8 @@ local function loadOptions(self)
         step = 1,
         order = 5,
         width = "double",
-        get = function(info) return Config:Get("alertDuration") end,
-        set = function(info, value) Config:Set("alertDuration", value) end,
+        get = function(info) return Config:get("alertDuration") end,
+        set = function(info, value) Config:set("alertDuration", value) end,
       },
       togglePosition = {
         type = 'execute',
@@ -93,7 +93,7 @@ local function loadOptions(self)
         desc = 'Toggle death alert position',
         order = 6,
         func = function()
-          self.manager:ToggleAnchorVisibility()
+          self.manager:toggleAnchorVisibility()
         end,
       },
       resetPosition = {
@@ -102,7 +102,7 @@ local function loadOptions(self)
         desc = 'Reset death alert position',
         order = 7,
         func = function()
-          self.manager:ResetAnchor()
+          self.manager:resetAnchor()
         end,
       },
       spacer1 = {
@@ -117,7 +117,7 @@ local function loadOptions(self)
         desc = 'Test a death alert',
         order = 9,
         func = function()
-          self:GenerateTestToast()
+          self:generateTestToast()
         end,
       },
       flushQueue = {
@@ -141,7 +141,7 @@ local function loadOptions(self)
         desc = 'Reset configuration to default values',
         order = 12,
         func = function()
-          Config:Reset()
+          Config:reset()
           AceConfigDialog:SelectGroup("Reaper")
         end,
       },
@@ -155,43 +155,43 @@ end
 local function initializeCommand()
   SLASH_REAPER1 = "/reaper"
   SlashCmdList["REAPER"] = function()
-    local instance = ConfigWindow:GetInstance()
-    instance:Open()
+    local instance = ConfigWindow:getInstance()
+    instance:open()
   end
 end
 
 ---@return ConfigWindow
-function ConfigWindow:New()
+function ConfigWindow:new()
   if instance then
     return instance
   end
 
-  Reaper:Print("ConfigWindow Created")
+  Reaper:print("ConfigWindow Created")
 
   local self = setmetatable({}, ConfigWindow)
-  self.manager = ToastManager:GetInstance()
+  self.manager = ToastManager:getInstance()
   loadOptions(self)
   instance = self
   return instance
 end
 
 ---@return ConfigWindow
-function ConfigWindow:Initialize()
-  instance = ConfigWindow:New()
+function ConfigWindow:initialize()
+  instance = ConfigWindow:new()
   initializeCommand()
   return instance
 end
 
 ---@return ConfigWindow
-function ConfigWindow:GetInstance()
+function ConfigWindow:getInstance()
   return instance
 end
 
-function ConfigWindow:Open()
+function ConfigWindow:open()
   AceConfigDialog:Open("Reaper")
 end
 
-function ConfigWindow:GenerateTestToast()
+function ConfigWindow:generateTestToast()
   local testValue = getRandomTestValue()
   self.manager:addToast(
     testValue.class,

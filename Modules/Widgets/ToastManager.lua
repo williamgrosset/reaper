@@ -41,8 +41,8 @@ local function createAnchor()
 
   anchor:SetScript("OnMouseUp", function(self, button)
     if button == "RightButton" then
-      local manager = ToastManager:GetInstance()
-      manager:ToggleAnchorVisibility(false)
+      local manager = ToastManager:getInstance()
+      manager:toggleAnchorVisibility(false)
     end
   end)
 
@@ -65,13 +65,13 @@ function ToastManager:new(limit)
 end
 
 ---@return ToastManager
-function ToastManager:GetInstance()
+function ToastManager:getInstance()
   return instance
 end
 
 ---@param limit number
 ---@return ToastManager
-function ToastManager:Initialize(limit)
+function ToastManager:initialize(limit)
   instance = ToastManager:new(limit)
   return instance
 end
@@ -106,7 +106,7 @@ function ToastManager:flush()
   self.toasts = {}
 end
 
-function ToastManager:ToggleAnchorVisibility(show)
+function ToastManager:toggleAnchorVisibility(show)
   if show == nil then
     if self.anchor:IsShown() then
       self.anchor:Hide()
@@ -120,7 +120,7 @@ function ToastManager:ToggleAnchorVisibility(show)
   end
 end
 
-function ToastManager:ResetAnchor()
+function ToastManager:resetAnchor()
   self.anchor:ClearAllPoints()
   self.anchor:SetPoint("TOP", UIParent, "TOP", defaultAnchorPos.x, defaultAnchorPos.y)
 end
