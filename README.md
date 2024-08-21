@@ -1,6 +1,6 @@
 # reaper
 
-![demo](https://github.com/user-attachments/assets/0f2976c6-19b1-49ae-9807-fb41d537eb44)
+![demo](https://i.imgur.com/SEbpjpI.gif)
 
 ☠️ Subtle and configurable death alerts for World of Warcraft Classic Hardcore
 
