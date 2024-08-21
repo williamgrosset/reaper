@@ -9,7 +9,7 @@ local defaultConfig = {
   alertsEnabled = true,
   soundEnabled = true,
   minLevel = 1,
-  alertDuration = 10
+  alertDuration = 8
 }
 
 function Config:initialize()
