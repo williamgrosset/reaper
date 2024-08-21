@@ -166,8 +166,6 @@ function ConfigWindow:new()
     return instance
   end
 
-  Reaper:print("ConfigWindow Created")
-
   local self = setmetatable({}, ConfigWindow)
   self.manager = ToastManager:getInstance()
   loadOptions(self)

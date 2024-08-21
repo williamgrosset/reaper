@@ -20,7 +20,6 @@ local function disableExternalUIAlerts()
 
   -- Disable Deathlog UI alerts to avoid duplication
   if alertsEnabled and deathLogSettings and deathLogSettings["DeathAlert"] then
-    Reaper:print("Disabling external alerts")
     deathLogSettings["DeathAlert"]["enable"] = false
   end
 end
@@ -82,8 +81,6 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
   local deathSourceName = getDeathSourceName(deathSourceId)
 
   if verifyAlert(playerLevel) then
-    Reaper:print("Death Alert Allowed")
-
     local manager = ToastManager:getInstance()
     manager:addToast(
       className,
@@ -95,8 +92,6 @@ local function onDeath(classId, playerName, playerLevel, deathSourceId)
 end
 
 local function registerEvents()
-  Reaper:print("Events Registered")
-
   -- Hook into DNL
   DeathNotificationLib_HookOnNewEntry(function(_player_data, _checksum, num_peer_checks, in_guild)
     onDeath(_player_data.class_id, _player_data.name, _player_data.level, _player_data.source_id)
@@ -104,8 +99,6 @@ local function registerEvents()
 end
 
 function Init:onAddonLoaded()
-  Reaper:print("Addon Loaded")
-
   Config:initialize()
   ToastManager:initialize(3)
   ConfigWindow:initialize()
@@ -113,7 +106,5 @@ function Init:onAddonLoaded()
 end
 
 function Init:onPlayerLogin()
-  Reaper:print("Player Logged In")
-
   registerEvents()
 end

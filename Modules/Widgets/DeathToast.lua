@@ -204,8 +204,6 @@ end
 ---@param creatureName string
 ---@return DeathToast
 function DeathToast:new(class, playerName, playerLevel, creatureName)
-  Reaper:print("DeathToast Created")
-
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
   self.toast = createToast(self, playerLevel)

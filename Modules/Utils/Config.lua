@@ -47,6 +47,4 @@ function Config:reset()
   for k, v in pairs(defaultConfig) do
     ReaperDB.config[k] = v
   end
-
-  Reaper:print("Configuration reset to defaults")
 end
