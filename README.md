@@ -1,5 +1,3 @@
-# reaper
-
 ![demo](https://i.imgur.com/SEbpjpI.gif)
 
 ☠️ Subtle and configurable death alerts for World of Warcraft Classic Hardcore
@@ -10,8 +8,8 @@
 * 🚀 Zero setup and simple configuration
 
 ## Download
-* Curse TODO
-* GitHub TODO
+* [Curse](https://www.curseforge.com/wow/addons/reaper-death-alerts)
+* [GitHub](https://github.com/williamgrosset/reaper/releases/latest)
 
 ## Configuration
 Run `/reaper` in chat to open in-game config.
