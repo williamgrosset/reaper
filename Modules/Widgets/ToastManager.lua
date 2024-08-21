@@ -8,19 +8,20 @@ ToastManager.__index = ToastManager
 ---@class DeathToast
 local DeathToast = Reaper.DeathToast
 
--- Singleton
-local instance
-
-local defaultAnchorPos = {
+-- Constants
+local DEFAULT_ANCHOR_POS = {
   x = 0,
   y = -UIParent:GetHeight() / 4
 }
+
+-- Singleton
+local instance
 
 local function createAnchor()
   local anchor = CreateFrame("Frame", "ToastAnchorFrame", UIParent, "BackdropTemplate")
   anchor:Hide()
   anchor:SetSize(124, 40)
-  anchor:SetPoint("TOP", UIParent, "TOP", defaultAnchorPos.x, defaultAnchorPos.y)
+  anchor:SetPoint("TOP", UIParent, "TOP", DEFAULT_ANCHOR_POS.x, DEFAULT_ANCHOR_POS.y)
 
   anchor:SetBackdrop({
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -122,5 +123,5 @@ end
 
 function ToastManager:resetAnchor()
   self.anchor:ClearAllPoints()
-  self.anchor:SetPoint("TOP", UIParent, "TOP", defaultAnchorPos.x, defaultAnchorPos.y)
+  self.anchor:SetPoint("TOP", UIParent, "TOP", DEFAULT_ANCHOR_POS.x, DEFAULT_ANCHOR_POS.y)
 end

@@ -5,7 +5,8 @@ local Config = {}
 Reaper.Config = Config
 Config.__index = Config
 
-local defaultConfig = {
+-- Constants
+local DEFAULT_VALUES = {
   alertsEnabled = true,
   soundEnabled = true,
   minLevel = 1,
@@ -20,7 +21,7 @@ function Config:initialize()
     ReaperDB.config = {}
   end
 
-  for k, v in pairs(defaultConfig) do
+  for k, v in pairs(DEFAULT_VALUES) do
     if ReaperDB.config[k] == nil then
       ReaperDB.config[k] = v
     end
@@ -44,7 +45,7 @@ function Config:reset()
     ReaperDB.config[k] = nil
   end
 
-  for k, v in pairs(defaultConfig) do
+  for k, v in pairs(DEFAULT_VALUES) do
     ReaperDB.config[k] = v
   end
 end
