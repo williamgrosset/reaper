@@ -6,6 +6,9 @@ luac.out
 *.zip
 *.tar.gz
 
+# Python build files
+__pycache__/
+
 # Object files
 *.o
 *.os
@@ -38,6 +41,9 @@ luac.out
 *.i*86
 *.x86_64
 *.hex
+
+# Releases
+Releases/
 
 # Documentation
 TODO.md
