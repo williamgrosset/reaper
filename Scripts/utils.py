@@ -2,7 +2,7 @@ import os
 import shutil
 import fnmatch
 
-include_patterns = [
+INCLUDE_PATTERNS = [
     "*.lua",
     "*.xml",
     "*.toc",
@@ -12,19 +12,19 @@ include_patterns = [
     "LICENSE"
 ]
 
-exclude_patterns = [
+EXCLUDE_PATTERNS = [
     ".git",
     "Scripts",
     "Releases"
 ]
 
-def matches_include_patterns(file_path, patterns):
+def matches_include_patterns(file_path, patterns=INCLUDE_PATTERNS):
     for pattern in patterns:
         if fnmatch.fnmatch(file_path, pattern):
             return True
     return False
 
-def matches_exclude_patterns(file_path, patterns):
+def matches_exclude_patterns(file_path, patterns=EXCLUDE_PATTERNS):
     for pattern in patterns:
         if fnmatch.fnmatch(file_path, pattern):
             return True
@@ -38,7 +38,7 @@ def copy_file(src, dest):
     except Exception as e:
         print(f"Unexpected error while copying file {src} to {dest}: {e}")
 
-def copy_directory(src, dest, include_patterns, exclude_patterns, src_dir):
+def copy_directory(src, dest, include_patterns=INCLUDE_PATTERNS, exclude_patterns=EXCLUDE_PATTERNS, src_dir=None):
     if not os.path.exists(dest):
         os.makedirs(dest)
     for item in os.listdir(src):
