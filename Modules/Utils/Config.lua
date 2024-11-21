@@ -26,6 +26,8 @@ function Config:initialize()
       ReaperDB.config[k] = v
     end
   end
+
+  Reaper:print("Run \"/reaper\" to customize your death alerts")
 end
 
 ---@param key string
