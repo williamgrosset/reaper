@@ -22,5 +22,5 @@ end)
 
 ---@param message string
 function Reaper:print(message)
-  print("|cFF765bff[Reaper]|r " .. message)
+  print("|cFFFFC300Reaper:|r " .. message)
 end

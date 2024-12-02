@@ -27,7 +27,7 @@ function Config:initialize()
     end
   end
 
-  Reaper:print("Run \"/reaper\" to customize your death alerts")
+  Reaper:print("Run |cFF765BFF/reaper|r to customize your death alerts")
 end
 
 ---@param key string
