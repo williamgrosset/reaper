@@ -1,6 +1,6 @@
 ## Interface: 11505
 ## Title: Reaper
-## Notes: Hardcore death alerts
+## Notes: Hardcore death alerts.|n|cffbbbbbbRun |cFF765bff/reaper|r to customize|r
 ## Author: Fable
 ## Version: 1.0.3
 ## SavedVariables: ReaperDB
