@@ -1079,6 +1079,7 @@ end
 
 local function onBlizzardChat(msg)
   _G["RaidWarningFrameSlot1"]:SetText("")
+  _G["RaidWarningFrameSlot2"]:SetText("")
 	C_Timer.After(10.0, function()
 		local _, a = string.split("[", msg)
     if a == nil then return end
