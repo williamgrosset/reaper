@@ -15,12 +15,8 @@ local ConfigWindow = Reaper.ConfigWindow
 local ToastManager = Reaper.ToastManager
 
 local function disableExternalUIAlerts()
-  local alertsEnabled = Config:get("alertsEnabled")
-  local deathLogSettings = deathlog_settings
-
-  -- Disable Deathlog UI alerts to avoid duplication
-  if alertsEnabled and deathLogSettings and deathLogSettings["DeathAlert"] then
-    deathLogSettings["DeathAlert"]["enable"] = false
+  Deathlog_DeathAlertPlay = function(entry)
+    -- Do nothing
   end
 end
 
