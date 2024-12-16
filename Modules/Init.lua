@@ -14,12 +14,6 @@ local ConfigWindow = Reaper.ConfigWindow
 ---@class ToastManager
 local ToastManager = Reaper.ToastManager
 
-local function disableExternalUIAlerts()
-  Deathlog_DeathAlertPlay = function(entry)
-    -- Do nothing
-  end
-end
-
 ---@param playerLevel number
 ---@return boolean
 local function verifyAlert(playerLevel)
@@ -98,7 +92,6 @@ function Init:onAddonLoaded()
   Config:initialize()
   ToastManager:initialize(3)
   ConfigWindow:initialize()
-  disableExternalUIAlerts()
 end
 
 function Init:onPlayerLogin()

@@ -15,6 +15,9 @@ local Config = Reaper.Config
 ---@class ToastManager
 local ToastManager = Reaper.ToastManager
 
+-- External alert reference
+local deathlogAlertFunc = Deathlog_DeathAlertPlay
+
 -- Constants
 local TEST_VALUES = {
   { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp" },
@@ -52,7 +55,9 @@ local function loadOptions(self)
         width = "full",
         order = 2,
         get = function(info) return Config:get("alertsEnabled") end,
-        set = function(info, value) Config:set("alertsEnabled", value) end,
+        set = function(info, value)
+          self:setAlertsEnabled(value)
+        end,
       },
       soundEnabled = {
         type = 'toggle',
@@ -160,6 +165,19 @@ local function initializeCommand()
   end
 end
 
+local function toggleExternalAlerts()
+  local alertsEnabled = Config:get("alertsEnabled")
+
+  if alertsEnabled then
+    Deathlog_DeathAlertPlay = function(entry)
+      -- Do nothing
+    end
+  else
+    -- Restore original alert
+    Deathlog_DeathAlertPlay = deathlogAlertFunc
+  end
+end
+
 ---@return ConfigWindow
 function ConfigWindow:new()
   if instance then
@@ -177,6 +195,7 @@ end
 function ConfigWindow:initialize()
   instance = ConfigWindow:new()
   initializeCommand()
+  toggleExternalAlerts()
   return instance
 end
 
@@ -187,6 +206,12 @@ end
 
 function ConfigWindow:open()
   AceConfigDialog:Open("Reaper")
+end
+
+---@param value boolean
+function ConfigWindow:setAlertsEnabled(value)
+  Config:set("alertsEnabled", value)
+  toggleExternalAlerts()
 end
 
 function ConfigWindow:generateTestToast()
