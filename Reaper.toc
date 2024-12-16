@@ -2,7 +2,7 @@
 ## Title: Reaper
 ## Notes: Hardcore death alerts.|n|cffbbbbbbRun |cFF765bff/reaper|r to customize|r
 ## Author: Fable
-## Version: 1.0.4
+## Version: 1.0.5
 ## SavedVariables: ReaperDB
 ## OptionalDeps: Ace3
 
