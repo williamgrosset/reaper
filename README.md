@@ -1,10 +1,10 @@
 ![demo](https://i.imgur.com/SEbpjpI.gif)
 
-☠️ Subtle and configurable death alerts for World of Warcraft Classic Hardcore
+☠️ Subtle death alerts for World of Warcraft Classic Hardcore
 
 ### Features
-* 📢 Display faction-wide player deaths
-* 🤝 Hooks into Blizzard and Deathlog APIs
+* 📢 Display global player deaths
+* 🤝 Automatically hooks into Blizzard API
 * 🚀 Zero setup and simple configuration
 
 ## Download
