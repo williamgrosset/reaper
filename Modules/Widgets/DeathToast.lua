@@ -100,6 +100,10 @@ end
 local function addPlayerLabel(self, text, level)
   local container = CreateFrame("Frame", nil, self.toast)
     
+  local skullTexture = container:CreateTexture(nil, "ARTWORK")
+  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Skull")
+  skullTexture:SetSize(16, 16)
+
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   levelText:SetText("(" .. level .. ")")
 
@@ -109,14 +113,15 @@ local function addPlayerLabel(self, text, level)
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   mainText:SetText(text)
 
-  local totalWidth = levelText:GetStringWidth() + mainText:GetStringWidth()
+  local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + levelText:GetStringWidth() + 4
 
   container:SetSize(totalWidth, mainText:GetStringHeight())
     
   container:SetPoint("CENTER", self.toast, "CENTER", 0, 10)
     
-  levelText:SetPoint("LEFT", container, "LEFT")
-  mainText:SetPoint("LEFT", levelText, "RIGHT", 3, 0)
+  skullTexture:SetPoint("LEFT", container, "LEFT")
+  mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+  levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
 end
 
 ---@param self DeathToast
@@ -130,7 +135,7 @@ local function addCreatureLabel(self, text, location)
   mainText:SetTextColor(1, 0, 0)
 
   local skullTexture = container:CreateTexture(nil, "ARTWORK")
-  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Skull")
+  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Elite")
   skullTexture:SetSize(16, 16)
 
   local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
