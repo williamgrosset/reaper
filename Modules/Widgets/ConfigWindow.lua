@@ -20,18 +20,18 @@ local deathlogAlertFunc = Deathlog_DeathAlertPlay
 
 -- Constants
 local TEST_VALUES = {
-  { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp" },
-  { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter" },
-  { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker" },
-  { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn" },
-  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear" },
-  { class = "Mage", playerName = "Merlin", playerLevel = 7, creatureName = "Prowler" }
+  { class = "Paladin", playerName = "Leeroy", playerLevel = 60, creatureName = "Rookery Whelp", location = "Blackrock Spire" },
+  { class = "Rogue", playerName = "Edwin", playerLevel = 52, creatureName = "Ravasaur Hunter", location = "Un'Goro Crater" },
+  { class = "Warrior", playerName = "Kungen", playerLevel = 36, creatureName = "Bloodscalp Berserker", location = "Stranglethorn Vale" },
+  { class = "Druid", playerName = "Cenarius", playerLevel = 28, creatureName = "Felmusk Felsworn", location = "Felwood" },
+  { class = "Hunter", playerName = "Legolas", playerLevel = 12, creatureName = "Rabid Thistle Bear", location = "Darkshore" },
+  { class = "Mage", playerName = "Merlin", playerLevel = 7, creatureName = "Prowler", location = "Westfall" }
 }
 
 -- Singleton
 local instance
 
----@return { class: string, playerName: string, playerLevel: number, creatureName: string }
+---@return { class: string, playerName: string, playerLevel: number, creatureName: string, location: string }
 local function getRandomTestValue()
   return TEST_VALUES[math.random(1, #TEST_VALUES)]
 end
@@ -219,6 +219,7 @@ function ConfigWindow:generateTestToast()
   self.manager:addToast(
     testValue.playerName,
     testValue.playerLevel,
-    testValue.creatureName
+    testValue.creatureName,
+    testValue.location
   )
 end

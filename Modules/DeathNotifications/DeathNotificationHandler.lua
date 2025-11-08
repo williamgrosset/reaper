@@ -31,14 +31,16 @@ local ENVIRONMENT_DAMAGE = {
 ---@field source_name string Name of creature/environment that killed the player
 ---@field source_id number|nil ID of creature that killed the player (optional, for backwards compatibility)
 ---@field class_id number|nil Class ID of the player (optional, parsed from Blizzard event if possible)
+---@field location string|nil Location where the player died (nil if environment damage)
 ---@field date number Unix timestamp of death
-local function PlayerDeathData(name, level, source_name, source_id, class_id, date)
+local function PlayerDeathData(name, level, source_name, source_id, class_id, location, date)
   return {
     name = name,
     level = level,
     source_name = source_name,
     source_id = source_id,
     class_id = class_id,
+    location = location,
     date = date or time(),
   }
 end
@@ -96,9 +98,10 @@ local function parseBlizzardDeathMessage(msg)
     return nil
   end
 
-  -- Determine death source
+  -- Determine death source and location
   local source_name = "Unknown"
   local source_id = nil -- Optional, for backwards compatibility
+  local location = nil
   
   -- Check for drowning
   local drowned_start = string.find(msg, "drowned")
@@ -113,6 +116,12 @@ local function parseBlizzardDeathMessage(msg)
       local in_start = string.find(msg, " in ", slain_end)
       if in_start then
         source_name = string.sub(msg, slain_end + 1, in_start - 1)
+        
+        -- Extract location (between " in " and "! They were")
+        local they_were_start = string.find(msg, "! They were", in_start)
+        if they_were_start then
+          location = string.sub(msg, in_start + 4, they_were_start - 1)
+        end
         
         -- Optionally try to look up the creature ID for backwards compatibility
         if npc_to_id and npc_to_id[source_name] then
@@ -129,7 +138,7 @@ local function parseBlizzardDeathMessage(msg)
     end
   end
 
-  return PlayerDeathData(player_name, level, source_name, source_id, nil, time())
+  return PlayerDeathData(player_name, level, source_name, source_id, nil, location, time())
 end
 
 ---Handle the HARDCORE_DEATHS event

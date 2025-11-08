@@ -30,7 +30,7 @@ local function createToast(self, playerLevel)
     end
   end)
 
-  toast:SetSize(272, 64)
+  toast:SetSize(320, 64)
 
   toast:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
@@ -121,7 +121,8 @@ end
 
 ---@param self DeathToast
 ---@param text string
-local function addCreatureLabel(self, text)
+---@param location string|nil
+local function addCreatureLabel(self, text, location)
   local container = CreateFrame("Frame", nil, self.toast)
 
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -134,12 +135,32 @@ local function addCreatureLabel(self, text)
 
   local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
 
+  -- Add location if provided
+  local locationText = nil
+  local mapTexture = nil
+  if location then
+    mapTexture = container:CreateTexture(nil, "ARTWORK")
+    mapTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Map")
+    mapTexture:SetSize(16, 16)
+
+    locationText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    locationText:SetText(location)
+    locationText:SetTextColor(0.8, 0.8, 0.8)
+
+    totalWidth = totalWidth + 6 + mapTexture:GetWidth() + locationText:GetStringWidth() + 2
+  end
+
   container:SetSize(totalWidth, mainText:GetStringHeight())
 
   container:SetPoint("CENTER", self.toast, "CENTER", 0, -10)
 
   skullTexture:SetPoint("LEFT", container, "LEFT")
   mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+
+  if location and mapTexture and locationText then
+    mapTexture:SetPoint("LEFT", mainText, "RIGHT", 6, 0)
+    locationText:SetPoint("LEFT", mapTexture, "RIGHT", 2, 0)
+  end
 end
 
 ---@param self DeathToast
@@ -160,14 +181,15 @@ end
 ---@param playerName string
 ---@param playerLevel number
 ---@param creatureName string
+---@param location string|nil
 ---@return DeathToast
-function DeathToast:new(playerName, playerLevel, creatureName)
+function DeathToast:new(playerName, playerLevel, creatureName, location)
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
   self.toast = createToast(self, playerLevel)
 
   addPlayerLabel(self, playerName, playerLevel)
-  addCreatureLabel(self, creatureName)
+  addCreatureLabel(self, creatureName, location)
 
   if playerLevel == 60 then
     addLegendaryDragon(self)

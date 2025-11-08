@@ -30,13 +30,15 @@ end
 ---@param playerName string
 ---@param playerLevel number
 ---@param deathSourceName string
-local function onDeath(playerName, playerLevel, deathSourceName)
+---@param location string|nil
+local function onDeath(playerName, playerLevel, deathSourceName, location)
   if verifyAlert(playerLevel) then
     local manager = ToastManager:getInstance()
     manager:addToast(
       playerName,
       playerLevel,
-      deathSourceName
+      deathSourceName,
+      location
     )
   end
 end
@@ -46,7 +48,7 @@ local function registerEvents()
   local DeathNotificationHandler = Reaper.DeathNotificationHandler
   DeathNotificationHandler.HookOnNewEntry(function(death_data)
     -- Use source_name directly from the Blizzard death message
-    onDeath(death_data.name, death_data.level, death_data.source_name)
+    onDeath(death_data.name, death_data.level, death_data.source_name, death_data.location)
   end)
 end
 
