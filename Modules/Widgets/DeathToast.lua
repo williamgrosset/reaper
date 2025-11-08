@@ -111,14 +111,9 @@ local function addPlayerLabel(self, text, level)
 
   local totalWidth = levelText:GetStringWidth() + mainText:GetStringWidth()
 
-  local iconPaddingLeft = 8
-  local iconPaddingRight = 8
-  local iconWidth = self.classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
-
   container:SetSize(totalWidth, mainText:GetStringHeight())
     
-  local toastWidth = self.toast:GetWidth()
-  container:SetPoint("LEFT", self.classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, 10)
+  container:SetPoint("CENTER", self.toast, "CENTER", 0, 10)
     
   levelText:SetPoint("LEFT", container, "LEFT")
   mainText:SetPoint("LEFT", levelText, "RIGHT", 3, 0)
@@ -139,48 +134,12 @@ local function addCreatureLabel(self, text)
 
   local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
 
-  local iconPaddingLeft = 8
-  local iconPaddingRight = 8
-  local iconWidth = self.classIcon:GetWidth() + iconPaddingLeft + iconPaddingRight
-
   container:SetSize(totalWidth, mainText:GetStringHeight())
 
-  local toastWidth = self.toast:GetWidth()
-  container:SetPoint("LEFT", self.classIcon, "RIGHT", (toastWidth - iconWidth - totalWidth) / 2 - iconPaddingRight, -10)
+  container:SetPoint("CENTER", self.toast, "CENTER", 0, -10)
 
   skullTexture:SetPoint("LEFT", container, "LEFT")
   mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
-end
-
----@param self DeathToast
----@param class string
----@return classIcon Frame
-local function createClassIcon(self, class)
-  local classIcon = CreateFrame("Frame", nil, self.toast, "BackdropTemplate")
-  classIcon:SetSize(48, 48)
-  classIcon:SetPoint("LEFT", self.toast, "LEFT", 8, 0)
-  classIcon:SetBackdrop({
-    bgFile = nil,
-    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-    tile = true, tileSize = 16, edgeSize = 12,
-    insets = { left = 2, right = 2, top = 2, bottom = 2 }
-  })
-
-  local color = self.rarity:getColor()
-  classIcon:SetBackdropBorderColor(color.red, color.green, color.blue)
-
-  local icon = classIcon:CreateTexture(nil, "ARTWORK")
-
-  if class == "" then
-    icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Misc\\Tombstone")
-  else
-    icon:SetTexture("Interface\\Addons\\Reaper\\Assets\\Icons\\Classes\\" .. class)
-  end
-
-  icon:SetSize(42, 42)
-  icon:SetPoint("CENTER", classIcon, "CENTER", 0, 0)
-
-  return classIcon
 end
 
 ---@param self DeathToast
@@ -198,16 +157,14 @@ local function addLegendaryDragon(self)
   dragonTexture:SetVertexColor(color.red, color.green, color.blue)
 end
 
----@param class string
 ---@param playerName string
 ---@param playerLevel number
 ---@param creatureName string
 ---@return DeathToast
-function DeathToast:new(class, playerName, playerLevel, creatureName)
+function DeathToast:new(playerName, playerLevel, creatureName)
   local self = setmetatable({}, DeathToast)
   self.rarity = Rarity:new(playerLevel)
   self.toast = createToast(self, playerLevel)
-  self.classIcon = createClassIcon(self, class)
 
   addPlayerLabel(self, playerName, playerLevel)
   addCreatureLabel(self, creatureName)

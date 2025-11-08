@@ -217,7 +217,6 @@ end
 function ConfigWindow:generateTestToast()
   local testValue = getRandomTestValue()
   self.manager:addToast(
-    testValue.class,
     testValue.playerName,
     testValue.playerLevel,
     testValue.creatureName
