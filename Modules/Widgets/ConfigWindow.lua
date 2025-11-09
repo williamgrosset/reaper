@@ -37,6 +37,20 @@ local function getRandomTestValue()
 end
 
 ---@param self ConfigWindow
+local function setupCloseHook(self)
+  -- Hook into the frame's Hide function to detect when window closes
+  local frame = AceConfigDialog.OpenFrames["Reaper"]
+  if frame and not frame:GetUserData("reaperCloseHooked") then
+    local originalHide = frame.Hide
+    frame.Hide = function(f)
+      self.manager:toggleAnchorVisibility(false)
+      originalHide(f)
+    end
+    frame:SetUserData("reaperCloseHooked", true)
+  end
+end
+
+---@param self ConfigWindow
 local function loadOptions(self)
   local options = {
     name = "Reaper",
@@ -154,7 +168,7 @@ local function loadOptions(self)
   }
 
   AceConfig:RegisterOptionsTable("Reaper", options)
-  AceConfigDialog:SetDefaultSize("Reaper", 440, 500) 
+  AceConfigDialog:SetDefaultSize("Reaper", 440, 500)
 end
 
 local function initializeCommand()
@@ -206,6 +220,13 @@ end
 
 function ConfigWindow:open()
   AceConfigDialog:Open("Reaper")
+  setupCloseHook(self)
+end
+
+function ConfigWindow:close()
+  AceConfigDialog:Close("Reaper")
+  -- Hide the anchor when config window is closed
+  self.manager:toggleAnchorVisibility(false)
 end
 
 ---@param value boolean
