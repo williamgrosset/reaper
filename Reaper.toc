@@ -1,4 +1,4 @@
-## Interface: 11505
+## Interface: 11508
 ## Title: Reaper
 ## Notes: Hardcore death alerts.|n|cffbbbbbbRun |cFF765bff/reaper|r to customize|r
 ## Author: Fable
