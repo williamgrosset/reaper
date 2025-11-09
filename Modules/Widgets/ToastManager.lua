@@ -11,7 +11,7 @@ local DeathToast = Reaper.DeathToast
 -- Constants
 local DEFAULT_ANCHOR_POS = {
   x = 0,
-  y = -UIParent:GetHeight() / 4
+  y = -UIParent:GetHeight() / 3
 }
 
 -- Singleton
