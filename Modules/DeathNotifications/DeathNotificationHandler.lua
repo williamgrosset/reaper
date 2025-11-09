@@ -31,7 +31,7 @@ local ENVIRONMENT_DAMAGE = {
 ---@field source_name string Name of creature/environment that killed the player
 ---@field source_id number|nil ID of creature that killed the player (optional, for backwards compatibility)
 ---@field class_id number|nil Class ID of the player (optional, parsed from Blizzard event if possible)
----@field location string|nil Location where the player died (nil if environment damage)
+---@field location string|nil Location where the player died (may be present for environment damage)
 ---@field date number Unix timestamp of death
 local function PlayerDeathData(name, level, source_name, source_id, class_id, location, date)
   return {
@@ -67,7 +67,10 @@ end
 
 ---Parse Blizzard's HARDCORE_DEATHS message
 ---Expected format: "[PlayerName] has been slain by a CreatureName in ZoneName! They were level 12"
----Or: "[PlayerName] drowned to death in ZoneName! They were level 12"
+---Or environment damage: "[PlayerName] drowned to death in ZoneName! They were level 12"
+---                       "[PlayerName] fell to their death in ZoneName! They were level 12"
+---                       "[PlayerName] burned to death in ZoneName! They were level 12"
+---                       etc.
 ---@param msg string The death message from Blizzard
 ---@return PlayerDeathData|nil
 local function parseBlizzardDeathMessage(msg)
@@ -108,6 +111,15 @@ local function parseBlizzardDeathMessage(msg)
   if drowned_start then
     source_name = ENVIRONMENT_DAMAGE[-2]
     source_id = -2
+    
+    -- Extract location for drowning (between "in " and "! They were")
+    local in_start = string.find(msg, " in ", drowned_start)
+    if in_start then
+      local they_were_start = string.find(msg, "! They were", in_start)
+      if they_were_start then
+        location = string.sub(msg, in_start + 4, they_were_start - 1)
+      end
+    end
   else
     -- Check for "has been slain by a"
     local slain_start, slain_end = string.find(msg, "has been slain by a ")
@@ -134,6 +146,76 @@ local function parseBlizzardDeathMessage(msg)
       if fell_start then
         source_name = ENVIRONMENT_DAMAGE[-3]
         source_id = -3
+        
+        -- Extract location for falling (between "in " and "! They were")
+        local in_start = string.find(msg, " in ", fell_start)
+        if in_start then
+          local they_were_start = string.find(msg, "! They were", in_start)
+          if they_were_start then
+            location = string.sub(msg, in_start + 4, they_were_start - 1)
+          end
+        end
+      else
+        -- Check for other environment damage types
+        -- Fire: "burned to death"
+        local burned_start = string.find(msg, "burned")
+        if burned_start then
+          source_name = ENVIRONMENT_DAMAGE[-5]
+          source_id = -5
+          
+          local in_start = string.find(msg, " in ", burned_start)
+          if in_start then
+            local they_were_start = string.find(msg, "! They were", in_start)
+            if they_were_start then
+              location = string.sub(msg, in_start + 4, they_were_start - 1)
+            end
+          end
+        else
+          -- Lava: "melted in lava"
+          local melted_start = string.find(msg, "melted")
+          if melted_start then
+            source_name = ENVIRONMENT_DAMAGE[-6]
+            source_id = -6
+            
+            local in_start = string.find(msg, " in ", melted_start)
+            if in_start then
+              local they_were_start = string.find(msg, "! They were", in_start)
+              if they_were_start then
+                location = string.sub(msg, in_start + 4, they_were_start - 1)
+              end
+            end
+          else
+            -- Fatigue: "died from fatigue"
+            local fatigue_start = string.find(msg, "fatigue")
+            if fatigue_start then
+              source_name = ENVIRONMENT_DAMAGE[-4]
+              source_id = -4
+              
+              local in_start = string.find(msg, " in ", fatigue_start)
+              if in_start then
+                local they_were_start = string.find(msg, "! They were", in_start)
+                if they_were_start then
+                  location = string.sub(msg, in_start + 4, they_were_start - 1)
+                end
+              end
+            else
+              -- Slime: "slimed"
+              local slime_start = string.find(msg, "slime")
+              if slime_start then
+                source_name = ENVIRONMENT_DAMAGE[-7]
+                source_id = -7
+                
+                local in_start = string.find(msg, " in ", slime_start)
+                if in_start then
+                  local they_were_start = string.find(msg, "! They were", in_start)
+                  if they_were_start then
+                    location = string.sub(msg, in_start + 4, they_were_start - 1)
+                  end
+                end
+              end
+            end
+          end
+        end
       end
     end
   end
