@@ -25,9 +25,7 @@ local function createToast(self, playerLevel)
 
   toast:EnableMouse(true)
   toast:SetScript("OnMouseDown", function(self, button)
-    if button == "RightButton" then
-      self:Hide()
-    end
+    self:Hide()
   end)
 
   toast:SetSize(320, 64)
