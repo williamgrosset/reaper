@@ -1,4 +1,4 @@
-![demo](https://i.imgur.com/SEbpjpI.gif)
+![demo](https://i.imgur.com/GUi8mWK.gif)
 
 ☠️ Subtle death alerts for World of Warcraft Classic Hardcore
 
