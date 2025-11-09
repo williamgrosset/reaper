@@ -8,6 +8,7 @@ Config.__index = Config
 local DEFAULT_VALUES = {
   alertsEnabled = true,
   soundEnabled = true,
+  borderEnabled = true,
   minLevel = 1,
   alertDuration = 8
 }

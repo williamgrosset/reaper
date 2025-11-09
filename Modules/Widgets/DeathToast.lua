@@ -30,16 +30,27 @@ local function createToast(self, playerLevel)
 
   toast:SetSize(320, 64)
 
-  toast:SetBackdrop({
-    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-    tile = true, tileSize = 16, edgeSize = 16,
-    insets = { left = 4, right = 4, top = 4, bottom = 4 }
-  })
-  toast:SetBackdropColor(0, 0, 0, 0.7)
+  local borderEnabled = Config:get("borderEnabled")
+  
+  if borderEnabled then
+    toast:SetBackdrop({
+      bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+      edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+      tile = true, tileSize = 16, edgeSize = 16,
+      insets = { left = 4, right = 4, top = 4, bottom = 4 }
+    })
+    toast:SetBackdropColor(0, 0, 0, 0.7)
 
-  local color = self.rarity:getColor()
-  toast:SetBackdropBorderColor(color.red, color.green, color.blue)
+    local color = self.rarity:getColor()
+    toast:SetBackdropBorderColor(color.red, color.green, color.blue)
+  else
+    toast:SetBackdrop({
+      bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+      tile = true, tileSize = 16, edgeSize = 0,
+      insets = { left = 0, right = 0, top = 0, bottom = 0 }
+    })
+    toast:SetBackdropColor(0, 0, 0, 0.7)
+  end
 
   local fadeIn = toast:CreateAnimationGroup()
   local fadeOut = toast:CreateAnimationGroup()
@@ -194,7 +205,8 @@ function DeathToast:new(playerName, playerLevel, creatureName, location)
   addPlayerLabel(self, playerName, playerLevel)
   addCreatureLabel(self, creatureName, location)
 
-  if playerLevel == 60 then
+  local borderEnabled = Config:get("borderEnabled")
+  if playerLevel == 60 and borderEnabled then
     addLegendaryDragon(self)
   end
 

@@ -82,6 +82,15 @@ local function loadOptions(self)
         get = function(info) return Config:get("soundEnabled") end,
         set = function(info, value) Config:set("soundEnabled", value) end,
       },
+      borderEnabled = {
+        type = 'toggle',
+        name = 'Enable border',
+        desc = 'Enable border on death alerts',
+        width = "full",
+        order = 4,
+        get = function(info) return Config:get("borderEnabled") end,
+        set = function(info, value) Config:set("borderEnabled", value) end,
+      },
       minLevel = {
         type = 'range',
         name = 'Minimum level',
@@ -89,7 +98,7 @@ local function loadOptions(self)
         min = 1,
         max = 60,
         step = 1,
-        order = 4,
+        order = 5,
         width = "double",
         get = function(info) return Config:get("minLevel") end,
         set = function(info, value) Config:set("minLevel", value) end,
@@ -101,7 +110,7 @@ local function loadOptions(self)
         min = 1,
         max = 15,
         step = 1,
-        order = 5,
+        order = 6,
         width = "double",
         get = function(info) return Config:get("alertDuration") end,
         set = function(info, value) Config:set("alertDuration", value) end,
@@ -110,7 +119,7 @@ local function loadOptions(self)
         type = 'execute',
         name = 'Toggle Position',
         desc = 'Toggle death alert position',
-        order = 6,
+        order = 7,
         func = function()
           self.manager:toggleAnchorVisibility()
         end,
@@ -119,7 +128,7 @@ local function loadOptions(self)
         type = 'execute',
         name = 'Reset Position',
         desc = 'Reset death alert position',
-        order = 7,
+        order = 8,
         func = function()
           self.manager:resetAnchor()
         end,
@@ -127,14 +136,14 @@ local function loadOptions(self)
       spacer1 = {
         type = 'description',
         name = '',
-        order = 8,
+        order = 9,
         width = "full",
       },
       testAlert = {
         type = 'execute',
         name = 'Test Alert',
         desc = 'Test a death alert',
-        order = 9,
+        order = 10,
         func = function()
           self:generateTestToast()
         end,
@@ -143,7 +152,7 @@ local function loadOptions(self)
         type = 'execute',
         name = 'Flush Queue',
         desc = 'Flush death alerts queue',
-        order = 10,
+        order = 11,
         func = function()
           self.manager:flush()
         end,
@@ -151,14 +160,14 @@ local function loadOptions(self)
       spacer2 = {
         type = 'description',
         name = '',
-        order = 11,
+        order = 12,
         width = "full",
       },
       reset = {
         type = 'execute',
         name = 'Reset to Defaults',
         desc = 'Reset configuration to default values',
-        order = 12,
+        order = 13,
         func = function()
           Config:reset()
           AceConfigDialog:SelectGroup("Reaper")
