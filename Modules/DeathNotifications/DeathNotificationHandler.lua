@@ -15,7 +15,7 @@ local hook_on_entry_functions = {}
 -- Cache to prevent duplicate death alerts
 local death_alert_cache = {}
 
--- Environment damage types (for backwards compatibility)
+-- Environment damage types
 local ENVIRONMENT_DAMAGE = {
   [-2] = "Drowning",
   [-3] = "Falling",
@@ -29,17 +29,13 @@ local ENVIRONMENT_DAMAGE = {
 ---@field name string Player's name
 ---@field level number Player's level
 ---@field source_name string Name of creature/environment that killed the player
----@field source_id number|nil ID of creature that killed the player (optional, for backwards compatibility)
----@field class_id number|nil Class ID of the player (optional, parsed from Blizzard event if possible)
 ---@field location string|nil Location where the player died (may be present for environment damage)
 ---@field date number Unix timestamp of death
-local function PlayerDeathData(name, level, source_name, source_id, class_id, location, date)
+local function PlayerDeathData(name, level, source_name, location, date)
   return {
     name = name,
     level = level,
     source_name = source_name,
-    source_id = source_id,
-    class_id = class_id,
     location = location,
     date = date or time(),
   }
@@ -103,14 +99,12 @@ local function parseBlizzardDeathMessage(msg)
 
   -- Determine death source and location
   local source_name = "Unknown"
-  local source_id = nil -- Optional, for backwards compatibility
   local location = nil
   
   -- Check for drowning
   local drowned_start = string.find(msg, "drowned")
   if drowned_start then
     source_name = ENVIRONMENT_DAMAGE[-2]
-    source_id = -2
     
     -- Extract location for drowning (between "in " and "! They were")
     local in_start = string.find(msg, " in ", drowned_start)
@@ -134,18 +128,12 @@ local function parseBlizzardDeathMessage(msg)
         if they_were_start then
           location = string.sub(msg, in_start + 4, they_were_start - 1)
         end
-        
-        -- Optionally try to look up the creature ID for backwards compatibility
-        if npc_to_id and npc_to_id[source_name] then
-          source_id = npc_to_id[source_name]
-        end
       end
     else
       -- Check for falling
       local fell_start = string.find(msg, "fell to")
       if fell_start then
         source_name = ENVIRONMENT_DAMAGE[-3]
-        source_id = -3
         
         -- Extract location for falling (between "in " and "! They were")
         local in_start = string.find(msg, " in ", fell_start)
@@ -161,7 +149,6 @@ local function parseBlizzardDeathMessage(msg)
         local burned_start = string.find(msg, "burned")
         if burned_start then
           source_name = ENVIRONMENT_DAMAGE[-5]
-          source_id = -5
           
           local in_start = string.find(msg, " in ", burned_start)
           if in_start then
@@ -175,7 +162,6 @@ local function parseBlizzardDeathMessage(msg)
           local melted_start = string.find(msg, "melted")
           if melted_start then
             source_name = ENVIRONMENT_DAMAGE[-6]
-            source_id = -6
             
             local in_start = string.find(msg, " in ", melted_start)
             if in_start then
@@ -189,7 +175,6 @@ local function parseBlizzardDeathMessage(msg)
             local fatigue_start = string.find(msg, "fatigue")
             if fatigue_start then
               source_name = ENVIRONMENT_DAMAGE[-4]
-              source_id = -4
               
               local in_start = string.find(msg, " in ", fatigue_start)
               if in_start then
@@ -203,7 +188,6 @@ local function parseBlizzardDeathMessage(msg)
               local slime_start = string.find(msg, "slime")
               if slime_start then
                 source_name = ENVIRONMENT_DAMAGE[-7]
-                source_id = -7
                 
                 local in_start = string.find(msg, " in ", slime_start)
                 if in_start then
@@ -220,7 +204,7 @@ local function parseBlizzardDeathMessage(msg)
     end
   end
 
-  return PlayerDeathData(player_name, level, source_name, source_id, nil, location, time())
+  return PlayerDeathData(player_name, level, source_name, location, time())
 end
 
 ---Handle the HARDCORE_DEATHS event
