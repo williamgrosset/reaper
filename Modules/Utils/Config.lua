@@ -9,6 +9,7 @@ local DEFAULT_VALUES = {
   alertsEnabled = true,
   soundEnabled = true,
   borderEnabled = true,
+  iconsEnabled = true,
   minLevel = 1,
   alertDuration = 8
 }

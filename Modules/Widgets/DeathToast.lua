@@ -108,10 +108,15 @@ end
 ---@param level number
 local function addPlayerLabel(self, text, level)
   local container = CreateFrame("Frame", nil, self.toast)
-    
-  local skullTexture = container:CreateTexture(nil, "ARTWORK")
-  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Skull")
-  skullTexture:SetSize(16, 16)
+  
+  local iconsEnabled = Config:get("iconsEnabled")
+  local skullTexture = nil
+  
+  if iconsEnabled then
+    skullTexture = container:CreateTexture(nil, "ARTWORK")
+    skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Skull")
+    skullTexture:SetSize(16, 16)
+  end
 
   local levelText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   levelText:SetText("(" .. level .. ")")
@@ -122,14 +127,21 @@ local function addPlayerLabel(self, text, level)
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
   mainText:SetText(text)
 
-  local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + levelText:GetStringWidth() + 4
+  local totalWidth = mainText:GetStringWidth() + levelText:GetStringWidth() + 3
+  if iconsEnabled and skullTexture then
+    totalWidth = totalWidth + skullTexture:GetWidth() + 2
+  end
 
   container:SetSize(totalWidth, mainText:GetStringHeight())
     
   container:SetPoint("CENTER", self.toast, "CENTER", 0, 10)
-    
-  skullTexture:SetPoint("LEFT", container, "LEFT")
-  mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+  
+  if iconsEnabled and skullTexture then
+    skullTexture:SetPoint("LEFT", container, "LEFT")
+    mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+  else
+    mainText:SetPoint("LEFT", container, "LEFT")
+  end
   levelText:SetPoint("LEFT", mainText, "RIGHT", 3, 0)
 end
 
@@ -138,42 +150,63 @@ end
 ---@param location string|nil
 local function addCreatureLabel(self, text, location)
   local container = CreateFrame("Frame", nil, self.toast)
+  
+  local iconsEnabled = Config:get("iconsEnabled")
 
   local mainText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
   mainText:SetText(text)
   mainText:SetTextColor(1, 0, 0)
 
-  local skullTexture = container:CreateTexture(nil, "ARTWORK")
-  skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Elite")
-  skullTexture:SetSize(16, 16)
+  local skullTexture = nil
+  if iconsEnabled then
+    skullTexture = container:CreateTexture(nil, "ARTWORK")
+    skullTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Elite")
+    skullTexture:SetSize(16, 16)
+  end
 
-  local totalWidth = skullTexture:GetWidth() + mainText:GetStringWidth() + 4
+  local totalWidth = mainText:GetStringWidth() + 2
+  if iconsEnabled and skullTexture then
+    totalWidth = totalWidth + skullTexture:GetWidth() + 2
+  end
 
   -- Add location if provided
   local locationText = nil
   local mapTexture = nil
   if location then
-    mapTexture = container:CreateTexture(nil, "ARTWORK")
-    mapTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Map")
-    mapTexture:SetSize(16, 16)
+    if iconsEnabled then
+      mapTexture = container:CreateTexture(nil, "ARTWORK")
+      mapTexture:SetTexture("Interface\\AddOns\\Reaper\\Assets\\Icons\\Misc\\Map")
+      mapTexture:SetSize(16, 16)
+    end
 
     locationText = container:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     locationText:SetText(location)
     locationText:SetTextColor(0.8, 0.8, 0.8)
 
-    totalWidth = totalWidth + 6 + mapTexture:GetWidth() + locationText:GetStringWidth() + 2
+    totalWidth = totalWidth + 6 + locationText:GetStringWidth()
+    if iconsEnabled and mapTexture then
+      totalWidth = totalWidth + mapTexture:GetWidth() + 2
+    end
   end
 
   container:SetSize(totalWidth, mainText:GetStringHeight())
 
   container:SetPoint("CENTER", self.toast, "CENTER", 0, -10)
 
-  skullTexture:SetPoint("LEFT", container, "LEFT")
-  mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+  if iconsEnabled and skullTexture then
+    skullTexture:SetPoint("LEFT", container, "LEFT")
+    mainText:SetPoint("LEFT", skullTexture, "RIGHT", 2, 0)
+  else
+    mainText:SetPoint("LEFT", container, "LEFT")
+  end
 
-  if location and mapTexture and locationText then
-    mapTexture:SetPoint("LEFT", mainText, "RIGHT", 6, 0)
-    locationText:SetPoint("LEFT", mapTexture, "RIGHT", 2, 0)
+  if location and locationText then
+    if iconsEnabled and mapTexture then
+      mapTexture:SetPoint("LEFT", mainText, "RIGHT", 6, 0)
+      locationText:SetPoint("LEFT", mapTexture, "RIGHT", 2, 0)
+    else
+      locationText:SetPoint("LEFT", mainText, "RIGHT", 6, 0)
+    end
   end
 end
 
