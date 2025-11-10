@@ -14,6 +14,8 @@
 ## Configuration
 Run `/reaper` in chat to open in-game config.
 
+![config](https://i.imgur.com/X1oXzgJ.jpeg)
+
 ## Support
 Submit any questions, bug reports, or feature requests on [GitHub](https://github.com/williamgrosset/reaper/issues).
 
